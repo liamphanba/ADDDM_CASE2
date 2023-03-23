@@ -21,7 +21,7 @@ cat("\014")
 
 <break>
 
-> Goal: 
+> Goal:
 
 # Packages
 
@@ -33,12 +33,13 @@ library(ggplot2)
 library(DT)
 library(jtools)
 library(kableExtra)
+library(pastecs)
 
 ```
 
-## Data
+# Data
 
-> . The source is thereby listed below. 
+> . The source is thereby listed below.
 
 > Source: **Advanced Data Driven Decision Making** [S401024](https://moodle.unige.ch/course/view.php?id=2675 "2675") - University of Geneva (GSEM)
 >
@@ -46,3 +47,27 @@ library(kableExtra)
 > Fereshteh Vahidi, Teaching Assistant\
 > Anastasia Floru, Teaching Assistant
 
+```{r data loading}
+Mydata <- read.csv("DATA/Data File_Case_Study_Factor Analysis_MD.csv", header=TRUE)
+
+# selecting questions
+Mydata_with_y <- Mydata[,c(9:41, 43:45, 51:52)]
+Mydata_qd <- Mydata[,9:41]
+```
+
+## Data Analysis
+
+```{r}
+list_na =colnames(Mydata_with_y)[apply(Mydata_with_y,2,anyNA)]
+list_na
+```
+
+There are missing values
+
+```{r}
+stat.desc(Mydata_with_y, norm=TRUE)
+```
+
+# Orthogonal Factor Analysis
+
+# Oblique Factor Analysis
