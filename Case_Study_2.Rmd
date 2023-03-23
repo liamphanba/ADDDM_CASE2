@@ -34,6 +34,15 @@ library(DT)
 library(jtools)
 library(kableExtra)
 library(pastecs)
+library(rcompanion)   #Histogram and Normal Curve
+library(nortest) #Kolmogorov-Smirnov-Test
+library(corrplot) #correlation matrix plot
+library(olsrr)  #VIF and Tolerance Values
+library(dplyr)
+library(pastecs)
+library(REdaS) #Bartelett's Test
+library(psych)
+library(lm.beta)
 
 ```
 
@@ -52,7 +61,9 @@ Mydata <- read.csv("DATA/Data File_Case_Study_Factor Analysis_MD.csv", header=TR
 
 # selecting questions
 Mydata_with_y <- Mydata[,c(9:41, 43:45, 51:52)]
+Mydata_with_y <- na.omit(Mydata_with_y)
 Mydata_qd <- Mydata[,9:41]
+rm(Mydata)
 ```
 
 ## Data Analysis
@@ -62,12 +73,103 @@ list_na =colnames(Mydata_with_y)[apply(Mydata_with_y,2,anyNA)]
 list_na
 ```
 
-There are missing values
+There are missing values -\> replace by mean or delete rows
 
 ```{r}
 stat.desc(Mydata_with_y, norm=TRUE)
 ```
 
+```{r}
+lillie.test(Mydata_with_y$wtp1)
+lillie.test(Mydata_with_y$wtp2)
+lillie.test(Mydata_with_y$wtp3)
+lillie.test(Mydata_with_y$ri1)
+lillie.test(Mydata_with_y$ri2)
+```
+
+```{r}
+cor_mat <- cor(Mydata_with_y)
+corrplot(as.matrix(cor_mat))
+
+```
+
+```{r}
+model <- lm(wtp1 + wtp2 + wtp3 + ri1 + ri2 ~., data = Mydata_with_y)
+ols_vif_tol(model)
+```
+
+```{r}
+par(mfrow = c(2, 2)) # Return plotting panel to 1 section
+plot(model)
+```
+
 # Orthogonal Factor Analysis
+
+```{r}
+KMOTEST=KMOS(Mydata_qd)
+KMOTEST
+```
+
+```{r}
+bart_spher(Mydata_qd, use="complete.obs")
+```
+
+check if this is the right use to take --\> dont bother we need to do list wise deletion (rows) or replace by mean
+
+```{r}
+sort(KMOTEST$MSA)
+```
+
+```{r}
+KMOTEST=KMOS(Mydata_qd)
+KMOTEST$KMO
+```
+
+```{r}
+PC0 <- psych::principal(Mydata_qd, rotate="varimax", scores=TRUE)
+
+plot(PC0$values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
+
+```
+
+```{r}
+PC1 <- psych::principal(Mydata_qd, 
+                        rotate="varimax",
+                        nfactors=9, 
+                        scores=TRUE)
+
+PC1_communalities=data.frame(sort(PC1$communality))
+PC1_communalities
+```
+
+```{r}
+EigenValue=PC1$values
+Variance=EigenValue/ncol(Mydata_qd)*100
+SumVariance=cumsum(EigenValue/ncol(Mydata_qd))
+
+Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Variance[Variance>0],Total_Variance=SumVariance[Variance>0])
+Total_Variance_Explained
+```
+
+```{r}
+print(PC1$loadings, cutoff=0.3,sort=TRUE)
+```
+
+```{r}
+XXX = c(x1:x4,x6:x26,x28:x30) # CHANGE THIS
+PC2 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax",nfactors=28, scores=TRUE)
+PC2 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax", scores=TRUE)
+
+plot(PC2$values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
+```
+
+```{r}
+data.frame(PC2$values)
+```
+
+```{r}
+PC3 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax",nfactors=9, scores=TRUE)
+print(PC3$loadings, cutoff=0.3,sort=TRUE)
+```
 
 # Oblique Factor Analysis
