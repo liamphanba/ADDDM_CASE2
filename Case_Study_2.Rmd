@@ -1,0 +1,48 @@
+---
+title: "Case Study 2"
+author: "Michael Daniel Bigler and Liam Arthur Phan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::downcute:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	include = TRUE,
+	fig.align = "center")
+rm(list = ls())
+cat("\014")
+
+```
+
+<break>
+
+> Goal: 
+
+# Packages
+
+> In the following all the packages needed for this case study are loaded.
+
+```{r packages}
+
+library(ggplot2)
+library(DT)
+library(jtools)
+library(kableExtra)
+
+```
+
+## Data
+
+> . The source is thereby listed below. 
+
+> Source: **Advanced Data Driven Decision Making** [S401024](https://moodle.unige.ch/course/view.php?id=2675 "2675") - University of Geneva (GSEM)
+>
+> Marcel Paulssen, Professor\
+> Fereshteh Vahidi, Teaching Assistant\
+> Anastasia Floru, Teaching Assistant
+
