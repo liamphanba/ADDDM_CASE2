@@ -124,27 +124,49 @@ KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
 
-The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous. 
+The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9). 
 
 ## 1.3 Principal axes factoring with varimax
 
-```{r}
-fa_result <- fa(Mydata_qd, nfactors = 9, rotate = "varimax", fm = "pa")
-print(fa_result$loadings, cutoff=0.3,sort=TRUE)
-
-plot(fa_result$values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
-
-factors_kaiser <- sum(fa_result$values>1)
-```
-
-Kaiser criterion gives 5 factors, scree-test  gives 10
+As we know from literature that there are 9 factors we do a factor analysis with 9. 
 
 ```{r}
-FA_communalities=data.frame(sort(fa_result$communality))
-problematic_communalities <- rownames(FA_communalities)[FA_communalities<0.5]
-problematic_communalities
+fa_result <- fa(Mydata_qd, rotate = "varimax", fm = "pa")
+
+plot(fa_result$e.values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
+
+factors_kaiser <- sum(fa_result$e.values>1)
 ```
 
-There are two communalities which are below 0.5. We need to watch out for these two. 
+Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense. 
+
+```{r}
+fa_result_8 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 8)
+print(fa_result_8$loadings, cutoff=0.3,sort=TRUE)
+```
+
+We see that every question is loaded in a factor except for the question 4 and 23. We get similar results when we look at the communalities. 
+
+```{r}
+FA_communalities_8=data.frame(sort(fa_result_8$communality))
+problematic_communalities_8 <- rownames(FA_communalities_8)[FA_communalities_8<0.5]
+problematic_communalities_8
+```
+We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23. 
+
+As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors. 
+```{r}
+fa_result_9 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 9)
+print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
+```
+
+We can observe that the loadings for factor 9 are solely based on question 4 and question 23. We rerun the communalities
+
+```{r}
+FA_communalities_9=data.frame(sort(fa_result_9$communality))
+problematic_communalities_9 <- rownames(FA_communalities_9)[FA_communalities_9<0.5]
+problematic_communalities_9
+```
+Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
 
 ## 1.4 Final Factor Solutions
