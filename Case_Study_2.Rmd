@@ -123,7 +123,6 @@ bart_spher(Mydata_qd)
 
 There is a correlation between variables, and the assumptions are not met since we have above 5 variables 
 
-
 ### Kaiser-Meyer-Olkin
 
 ```{r}
