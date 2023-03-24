@@ -44,6 +44,7 @@ library(REdaS) #Bartelett's Test
 library(psych)
 library(lm.beta)
 library(RColorBrewer)
+library(tidyverse)
 
 ```
 
@@ -176,6 +177,27 @@ problematic_communalities_9 <- rownames(FA_communalities_9)[FA_communalities_9<0
 problematic_communalities_9
 ```
 
-Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
+Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
 
 ## 1.4 Final Factor Solutions
+
+```{r}
+
+Aesthetics_Appearance <- Mydata_with_y[c("qd1","qd10","qd20","qd27")]
+Durability <- Mydata_with_y[c("qd26","qd28","qd31")]
+Ease_of_Use <- Mydata_with_y[c("qd3","qd11","qd13","qd30")]
+Features_Versatility <- Mydata_with_y[c("qd6","qd8","qd18","qd25")]
+Conformance <- Mydata_with_y[c("qd15","qd17","qd32")]
+Performance <- Mydata_with_y[c("qd2","qd5","qd7","qd12","qd16")]
+Reliability_Flawlessness <- Mydata_with_y[c("qd22","qd29","qd33")]
+Serviceability <- Mydata_with_y[c("qd9","qd14","qd19","qd21","qd24")]
+Distinctiveness_Prestige <- Mydata_with_y[c("qd4","qd23")]
+
+All_Factors <- cbind(Aesthetics_Appearance,Durability,Ease_of_Use,Features_Versatility,Conformance,Performance,Reliability_Flawlessness,Serviceability,Distinctiveness_Prestige)
+  
+DT::datatable(All_Factors)
+
+```
+
+
+
