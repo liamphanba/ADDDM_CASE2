@@ -123,6 +123,18 @@ The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvel
 ```{r}
 fa_result <- fa(Mydata_qd, nfactors = 9, rotate = "varimax", fm = "pa")
 print(fa_result$loadings, cutoff=0.3,sort=TRUE)
+
+factors_kaiser <- sum(fa_result$values>1)
+
+plot(fa_result$values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
+```
+
+Kaiser criterion gives 5 factors, scree-test  gives 10
+
+```{r}
+FA_communalities=data.frame(sort(fa_result$communality))
+problematic_communalities <- rownames(FA_communalities)[FA_communalities<0.5]
+problematic_communalities
 ```
 
 ## 1.4 Final Factor Solutions
