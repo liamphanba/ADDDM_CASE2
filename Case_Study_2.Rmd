@@ -88,6 +88,14 @@ DT::datatable(round(Stat_Desc,3))
 
 # 1. Orthogonal Factor Analysis
 
+## 1.1 Normality Test on All Variables
+
+```{r}
+
+apply(Mydata_with_y,2,shapiro.test)
+
+```
+
 ## 1.1 Correlation Plot
 
 ```{r}
