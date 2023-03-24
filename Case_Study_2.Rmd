@@ -109,21 +109,22 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 ```{r}
 KMOTEST=KMOS(Mydata_qd)
-KMOTEST
-```
-
-```{r}
-bart_spher(Mydata_qd, use="complete.obs")
-```
-
-```{r}
 sort(KMOTEST$MSA)
 ```
+
+All values are above 0.6 so a good factor analysis can be done. Only one value is close to not being good enough which is qd4. All the others are over 0.9. 
+
+```{r}
+bart_spher(Mydata_qd)
+```
+There is a correlation between variables 
 
 ```{r}
 KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
+
+The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous. 
 
 ## 1.3 Principal axes factoring with varimax
 
