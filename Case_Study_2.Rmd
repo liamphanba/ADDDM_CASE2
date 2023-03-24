@@ -103,7 +103,7 @@ KMOTEST
 ```
 
 ```{r}
-bart_spher(Mydata_qd, use="complete.obs")
+bart_spher(Mydata_qd)
 ```
 
 ```{r}
