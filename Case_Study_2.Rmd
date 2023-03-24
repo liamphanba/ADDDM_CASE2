@@ -43,6 +43,7 @@ library(pastecs)
 library(REdaS) #Bartelett's Test
 library(psych)
 library(lm.beta)
+library(RColorBrewer)
 
 ```
 
@@ -89,7 +90,6 @@ lillie.test(Mydata_with_y$ri2)
 
 ```{r}
 
-library(RColorBrewer)
 cor_mat <- cor(Mydata_with_y)
 corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.srt=45,tl.cex = 0.5)
 
