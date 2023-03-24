@@ -194,10 +194,21 @@ Serviceability <- Mydata_with_y[c("qd9","qd14","qd19","qd21","qd24")]
 Distinctiveness_Prestige <- Mydata_with_y[c("qd4","qd23")]
 
 All_Factors <- cbind(Aesthetics_Appearance,Durability,Ease_of_Use,Features_Versatility,Conformance,Performance,Reliability_Flawlessness,Serviceability,Distinctiveness_Prestige)
-  
-DT::datatable(All_Factors)
+
+DT::datatable(Aesthetics_Appearance, caption = "Aesthetics & Appearance")
+DT::datatable(Durability,caption = "Durability" )
+DT::datatable(Ease_of_Use,caption = "Ease of Use")
+DT::datatable(Features_Versatility,caption = "Features & Versatility")
+DT::datatable(Conformance,caption = "Conformance")
+DT::datatable(Performance,caption = "Performance")
+DT::datatable(Reliability_Flawlessness,caption = "Reliability & Flawlessness")
+DT::datatable(Serviceability,caption = "Serviceability")
+DT::datatable(Distinctiveness_Prestige,caption = "Distinctiveness & Prestige")
+
+DT::datatable(All_Factors, caption = "All Factors")
 
 ```
+
 
 
 
