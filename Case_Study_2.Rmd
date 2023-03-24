@@ -106,6 +106,13 @@ plot(model)
 # Orthogonal Factor Analysis
 
 ```{r}
+cor_mat <- cor(Mydata_with_y)
+corrplot(as.matrix(cor_mat))
+```
+
+## Anti-image correlation, KMO and Bartlett's test
+
+```{r}
 KMOTEST=KMOS(Mydata_qd)
 KMOTEST
 ```
@@ -125,6 +132,8 @@ KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
 
+## Principal component analysis 1
+
 ```{r}
 PC0 <- psych::principal(Mydata_qd, rotate="varimax", scores=TRUE)
 
@@ -142,6 +151,8 @@ PC1_communalities=data.frame(sort(PC1$communality))
 PC1_communalities
 ```
 
+## Total variance explained
+
 ```{r}
 EigenValue=PC1$values
 Variance=EigenValue/ncol(Mydata_qd)*100
@@ -150,6 +161,8 @@ SumVariance=cumsum(EigenValue/ncol(Mydata_qd))
 Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Variance[Variance>0],Total_Variance=SumVariance[Variance>0])
 Total_Variance_Explained
 ```
+
+## Principal component analysis 2
 
 ```{r}
 print(PC1$loadings, cutoff=0.3,sort=TRUE)
@@ -172,4 +185,17 @@ PC3 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax",nfacto
 print(PC3$loadings, cutoff=0.3,sort=TRUE)
 ```
 
+
+## Interpret the factors based on the literature review on quality dimensions 
+
+## Do all of the variables in your final solution show clear loading patterns?
+
+## For your final solution run a principal component analysis and compare the results. Are there differences to your solution based on principal axis factoring?
+
+## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
+
 # Oblique Factor Analysis
+
+## : Run an oblique factor analysis with the variables of your final solution in exercise 1 using Promax
+
+## How high are the factors correlated and what is the highest correlation between factors
