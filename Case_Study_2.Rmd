@@ -92,7 +92,7 @@ DT::datatable(round(Stat_Desc,3))
 
 ```{r}
 
-apply(Mydata_with_y,2,shapiro.test)
+apply(Mydata_with_y[1:33],2,shapiro.test)
 
 ```
 
