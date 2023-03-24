@@ -84,7 +84,6 @@ DT::datatable(round(Stat_Desc,3))
 
 ```
 
-> All Normality Test are rejected, thus not normal data distributions. 
 
 # 1. Orthogonal Factor Analysis
 
