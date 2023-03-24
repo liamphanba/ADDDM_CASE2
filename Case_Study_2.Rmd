@@ -117,6 +117,7 @@ All values are above 0.6 so a good factor analysis can be done. Only one value i
 ```{r}
 bart_spher(Mydata_qd)
 ```
+
 There is a correlation between variables 
 
 ```{r}
