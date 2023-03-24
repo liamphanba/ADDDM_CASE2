@@ -107,122 +107,16 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 ```
 
+# 1. Orthogonal Factor Analysis
 
-# Question 1 
+## 1.1  Principal axes factoring with varimax
 
-
-
-
-```{r}
-model <- lm(wtp1 + wtp2 + wtp3 + ri1 + ri2 ~., data = Mydata_with_y)
-ols_vif_tol(model)
-```
-
-```{r}
-par(mfrow = c(2, 2)) # Return plotting panel to 1 section
-plot(model)
-```
-
-# Orthogonal Factor Analysis
-
-## Principal axes factoring with varimax
 ```{r}
 fa_result <- fa(Mydata_qd, nfactors = 9, rotate = "varimax", fm = "pa")
 fa_result$loadings
 ```
 
 
-```{r}
-cor_mat <- cor(Mydata_with_y)
-corrplot(as.matrix(cor_mat))
-```
-
-## Anti-image correlation, KMO and Bartlett's test
-
-```{r}
-KMOTEST=KMOS(Mydata_qd)
-KMOTEST
-```
-
-```{r}
-bart_spher(Mydata_qd, use="complete.obs")
-```
-
-check if this is the right use to take --\> dont bother we need to do list wise deletion (rows) or replace by mean
-
-```{r}
-sort(KMOTEST$MSA)
-```
-
-```{r}
-KMOTEST=KMOS(Mydata_qd)
-KMOTEST$KMO
-```
-
-## Principal component analysis 1
-
-```{r}
-PC0 <- psych::principal(Mydata_qd, rotate="varimax", scores=TRUE)
-
-plot(PC0$values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
-
-```
-
-```{r}
-PC1 <- psych::principal(Mydata_qd, 
-                        rotate="varimax",
-                        nfactors=9, 
-                        scores=TRUE)
-
-PC1_communalities=data.frame(sort(PC1$communality))
-PC1_communalities
-```
-
-## Total variance explained
-
-```{r}
-EigenValue=PC1$values
-Variance=EigenValue/ncol(Mydata_qd)*100
-SumVariance=cumsum(EigenValue/ncol(Mydata_qd))
-
-Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Variance[Variance>0],Total_Variance=SumVariance[Variance>0])
-Total_Variance_Explained
-```
-
-## Principal component analysis 2
-
-```{r}
-print(PC1$loadings, cutoff=0.3,sort=TRUE)
-```
-
-```{r}
-XXX = c(x1:x4,x6:x26,x28:x30) # CHANGE THIS
-PC2 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax",nfactors=28, scores=TRUE)
-PC2 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax", scores=TRUE)
-
-plot(PC2$values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
-```
-
-```{r}
-data.frame(PC2$values)
-```
-
-```{r}
-PC3 <- psych::principal(subset(Mydata_qd, select = XXX), rotate="varimax",nfactors=9, scores=TRUE)
-print(PC3$loadings, cutoff=0.3,sort=TRUE)
-```
 
 
-## Interpret the factors based on the literature review on quality dimensions 
 
-## Do all of the variables in your final solution show clear loading patterns?
-
-## For your final solution run a principal component analysis and compare the results. Are there differences to your solution based on principal axis factoring?
-
-## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
-
-# Oblique Factor Analysis
-
-## : Run an oblique factor analysis with the variables of your final solution in exercise 1 using Promax
-
-## How high are the factors correlated and what is the highest correlation between factors
