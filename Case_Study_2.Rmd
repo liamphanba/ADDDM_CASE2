@@ -92,6 +92,8 @@ lillie.test(Mydata_with_y$ri1)
 lillie.test(Mydata_with_y$ri2)
 ```
 
+> All Normality Test are rejected, thus not normal data distributions. 
+
 ```{r}
 
 cor_mat <- cor(Mydata_with_y)
