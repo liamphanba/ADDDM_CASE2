@@ -77,7 +77,11 @@ list_na
 There are missing values -\> replace by mean or delete rows
 
 ```{r}
-stat.desc(Mydata_with_y, norm=TRUE)
+
+Stat_Desc <- stat.desc(Mydata_with_y, norm=TRUE)
+
+DT::datatable(round(Stat_Desc,3))
+
 ```
 
 ```{r}
@@ -87,6 +91,8 @@ lillie.test(Mydata_with_y$wtp3)
 lillie.test(Mydata_with_y$ri1)
 lillie.test(Mydata_with_y$ri2)
 ```
+
+> All Normality Test are rejected, thus not normal data distributions. 
 
 ```{r}
 
