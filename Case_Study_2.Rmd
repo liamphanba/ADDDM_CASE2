@@ -107,6 +107,13 @@ plot(model)
 
 # Orthogonal Factor Analysis
 
+## Principal axes factoring with varimax
+```{r}
+fa_result <- fa(Mydata_qd, nfactors = 9, rotate = "varimax", fm = "pa")
+fa_result$loadings
+```
+
+
 ```{r}
 cor_mat <- cor(Mydata_with_y)
 corrplot(as.matrix(cor_mat))
