@@ -158,9 +158,11 @@ FA_communalities_8=data.frame(sort(fa_result_8$communality))
 problematic_communalities_8 <- rownames(FA_communalities_8)[FA_communalities_8<0.5]
 problematic_communalities_8
 ```
+
 We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23. 
 
 As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors. 
+
 ```{r}
 fa_result_9 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 9)
 print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
@@ -173,6 +175,7 @@ FA_communalities_9=data.frame(sort(fa_result_9$communality))
 problematic_communalities_9 <- rownames(FA_communalities_9)[FA_communalities_9<0.5]
 problematic_communalities_9
 ```
+
 Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
 
 ## 1.4 Final Factor Solutions
