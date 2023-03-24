@@ -74,7 +74,6 @@ list_na =colnames(Mydata_with_y)[apply(Mydata_with_y,2,anyNA)]
 list_na
 ```
 
-There are missing values -\> replace by mean or delete rows
 
 ## Data Statistics Summary
 
