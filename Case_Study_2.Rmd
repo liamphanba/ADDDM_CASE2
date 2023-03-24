@@ -86,7 +86,9 @@ DT::datatable(round(Stat_Desc,3))
 
 > All Normality Test are rejected, thus not normal data distributions. 
 
-## Correlation Plot
+# 1. Orthogonal Factor Analysis
+
+## 1.1 Correlation Plot
 
 ```{r}
 
@@ -95,7 +97,7 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 ```
 
-## Anti-image correlation, KMO and Bartlett's test
+## 1.2 Anti-image correlation, KMO and Bartlett's test
 
 ```{r}
 KMOTEST=KMOS(Mydata_qd)
@@ -115,15 +117,11 @@ KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
 
-# 1. Orthogonal Factor Analysis
-
-## 1.1  Principal axes factoring with varimax
+## 1.3 Principal axes factoring with varimax
 
 ```{r}
 fa_result <- fa(Mydata_qd, nfactors = 9, rotate = "varimax", fm = "pa")
 print(fa_result$loadings, cutoff=0.3,sort=TRUE)
 ```
 
-
-## Interpret the factors based on the literature review on quality dimensions (see table 1)
-
+## 1.4 Final Factor Solutions
