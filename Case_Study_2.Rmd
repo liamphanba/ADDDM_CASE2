@@ -209,6 +209,30 @@ DT::datatable(All_Factors, caption = "All Factors")
 
 ```
 
+## Do all variables show clear loading patterns?
 
+Yes they do. Factor 8 is the only one which has a loading on an other factor as well that is higher than 0.3. 
 
+## Principal component analysis 
+
+Here we run a principal component analysis. 
+
+```{r}
+PC1 <- principal(Mydata_qd, rotate = "varimax", nfactors = 9)
+print(PC1$loadings, cutoff=0.3,sort=TRUE)
+```
+
+Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themself. 
+
+```{r}
+PC_communalities_9=data.frame(sort(PC1$communality))
+problematic_communalities_9 <- rownames(PC_communalities_9)[PC_communalities_9<0.5]
+problematic_communalities_9
+```
+
+It is also observable that now there are no communalities which are below 0.5. So it assures us that we made the right decision before to run with 9 factors instead of 8. 
+
+## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
+
+[Explanation](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
 
