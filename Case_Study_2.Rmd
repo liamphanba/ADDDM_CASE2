@@ -236,3 +236,19 @@ It is also observable that now there are no communalities which are below 0.5. S
 
 [Explanation](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
 
+eigenvalues of factors explain how much variance of the assigned questions they cover. 
+
+
+
+
+BELOW IS WRONG OR NOT NEEDED
+
+The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them. 
+
+```{r}
+EigenValue=PC1$values
+Variance=EigenValue/ncol(Mydata_qd)*100
+SumVariance=cumsum(EigenValue/ncol(Mydata_qd))
+Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Variance[Variance>0],Total_Variance=SumVariance[Variance>0])
+Total_Variance_Explained
+```
