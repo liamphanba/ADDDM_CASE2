@@ -252,3 +252,9 @@ SumVariance=cumsum(EigenValue/ncol(Mydata_qd))
 Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Variance[Variance>0],Total_Variance=SumVariance[Variance>0])
 Total_Variance_Explained
 ```
+
+# Oblique Factor analysis
+
+```{r}
+promax <- fa(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
+```
