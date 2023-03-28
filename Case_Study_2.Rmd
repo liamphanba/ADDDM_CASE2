@@ -258,3 +258,24 @@ Total_Variance_Explained
 ```{r}
 promax <- fa(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
 ```
+
+## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
+
+## Compute factor scores for your factors and name and label them appropriately
+
+## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
+
+```{r}
+Mydata_with_y$avg_wtp <- apply(Mydata_with_y[,34:36], 1, 'mean')
+Mydata_with_y$avg_ri <- apply(Mydata_with_y[,37:38], 1, 'mean')
+```
+
+## Run a regression analysis with the factor scores of the quality dimensions as independent and both the mean score of willingness to pay premium and repurchase intention as dependent variables
+
+## Interpret your results from a managerial perspective
+
+## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
+
+## What do the results of these regressions imply? Please compare the brands on the factor scores
+
+## What are points of parity and points of difference for the different brands. 
