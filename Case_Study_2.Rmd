@@ -45,6 +45,7 @@ library(psych)
 library(lm.beta)
 library(RColorBrewer)
 library(tidyverse)
+library(fastDummies)
 
 ```
 
@@ -62,8 +63,10 @@ library(tidyverse)
 Mydata <- read.csv("DATA/Data File_Case_Study_Factor Analysis_MD.csv", header=TRUE)
 
 # selecting questions
-Mydata_with_y <- Mydata[,c(9:41, 43:45, 51:52)]
+Mydata_with_y <- Mydata[,c(5, 9:41, 43:45, 51:52)]
 Mydata_with_y <- na.omit(Mydata_with_y)
+brands <- Mydata_with_y$brand
+Mydata_with_y <- Mydata_with_y[,c(2:39)]
 Mydata_qd <- Mydata_with_y[,1:33]
 rm(Mydata)
 ```
@@ -269,6 +272,10 @@ pattern <- promax$loadings # weights
 
 ## Compute factor scores for your factors and name and label them appropriately
 
+```{r}
+scores <- promax$scores
+```
+
 ## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
 
 ```{r}
@@ -278,10 +285,32 @@ Mydata_with_y$avg_ri <- apply(Mydata_with_y[,37:38], 1, 'mean')
 
 ## Run a regression analysis with the factor scores of the quality dimensions as independent and both the mean score of willingness to pay premium and repurchase intention as dependent variables
 
+```{r}
+Mydata_lm <- data.frame(scores, Mydata_with_y[, 39:40])
+mod1 <- lm(avg_wtp + avg_ri ~., Mydata_lm)
+mod2 <- lm(avg_wtp ~., Mydata_lm)
+mod3 <- lm(avg_ri ~., Mydata_lm)
+
+summary(mod1)
+summary(mod2)
+summary(mod3)
+```
+
 ## Interpret your results from a managerial perspective
 
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
+```{r}
+Mydata_lm_2 <- data.frame(Mydata_with_y$avg_ri, brands)
+Mydata_lm_2 <- dummy_cols(Mydata_lm_2, select_columns = 'brands', remove_selected_columns = TRUE, remove_first_dummy = TRUE)
+
+mod4 <- lm(Mydata_with_y.avg_ri ~., Mydata_lm_2)
+
+summary(mod4)
+```
+
 ## What do the results of these regressions imply? Please compare the brands on the factor scores
+
+Mydata_qd with brands and then compute mean per brand?
 
 ## What are points of parity and points of difference for the different brands. 
