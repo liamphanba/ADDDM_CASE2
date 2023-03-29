@@ -261,6 +261,12 @@ promax <- fa(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
 
 ## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
 
+```{r}
+structure <- promax$Structure # correlation
+pattern <- promax$loadings # weights
+```
+
+
 ## Compute factor scores for your factors and name and label them appropriately
 
 ## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
