@@ -258,11 +258,16 @@ Total_Variance_Explained
 
 # Oblique Factor analysis
 
+
+Here chose best one from above pca or fa and then change rotation 
+
 ```{r}
 promax <- fa(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
 ```
 
 ## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
+
+Just between factors --> correlation on scores matrix not using the structure matrix. 
 
 ```{r}
 structure <- promax$Structure # correlation
