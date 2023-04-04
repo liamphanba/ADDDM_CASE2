@@ -22,7 +22,7 @@ cat("\014")
 
 <break>
 
-> Goal:
+> Goal: The goal of the research project discussed in the text is to develop a framework to measure product quality of smartphones as experienced by customers in terms of its constituent dimensions and to understand which quality dimensions significantly explain key outcome variables such as willingness to pay premium and repurchase intentions. We also will compare brand competitors in such factors and try to evaluate them with a common score scale. Thus, The goal of the project is to gain a deeper understanding of which quality dimensions significantly explain key outcome variables such as **willingness to pay premium** (**WTPP**) and **repurchase intentions** (**RI**) from customers. This information will be used by product management to improve the quality of their smartphones and enhance the company's competitive advantage in the marketplace.
 
 # Packages
 
@@ -410,6 +410,7 @@ Mydata_qd with brands and then compute mean per brand?
 1-Apple  2-Samsung  3- LG  4- Motorola  5- Other
 
 ## What are points of parity and points of difference for the different brands. 
+
 
 
 
