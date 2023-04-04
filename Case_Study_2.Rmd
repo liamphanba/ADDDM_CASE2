@@ -412,7 +412,8 @@ summary(mod4)
 Mydata_qd with brands and then compute mean per brand?
 
 ```{r}
-
+Mydata_brands <- data.frame(scores, brands)
+aggregate(Mydata_brands[,1:9], by = list(Mydata_brands$brands), mean)
 ```
 
 ## What are points of parity and points of difference for the different brands. 
