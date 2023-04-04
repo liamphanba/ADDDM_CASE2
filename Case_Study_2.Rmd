@@ -126,6 +126,8 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6. 
 
+# Multiple Linear Regression on All Covariates
+
 ## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
 
 ```{r}
