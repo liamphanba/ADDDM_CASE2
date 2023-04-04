@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output:
   rmdformats::downcute:
     code_folding: hide
+    number_sections: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -73,7 +74,7 @@ rm(Mydata)
 
 ## Data Analysis
 
-```{r}
+```{r, include=FALSE}
 list_na =colnames(Mydata_with_y)[apply(Mydata_with_y,2,anyNA)]
 list_na
 ```
@@ -89,17 +90,32 @@ DT::datatable(round(Stat_Desc,3))
 ```
 
 
-# 1. Orthogonal Factor Analysis
+There is no missing values, kurtosis and skewness are relatively smalls, but kurtosis shows slight flat distributions. The skewness being often negative shows right skewed distribution of the data. 
 
-## 1.1 Normality Test on All Variables
+> Comments: We can see that we have 969 observations for 33 questions (covariates), meaning we are above the required rule of thumb by **Frank Harrell's book, Regression Modeling Strategies** which states that for each covariate, 10-20 observations are needed. We would need 33x10 = 330 observations or 33x20 = 660 observations, and have way above with 969 observations [330 or 660 required]. None of the covariates are behaving normally.  
+
+## **Histograms**
+
+We can see the normality not full-filled visually as well. 
 
 ```{r}
 
-apply(Mydata_with_y[1:33],2,shapiro.test)
+plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd1"))
 
 ```
+## **Normality Test on Y**
 
-## 1.1 Correlation Plot
+```{r}
+lillie.test(Mydata_with_y$wtp1) 
+lillie.test(Mydata_with_y$wtp2) 
+lillie.test(Mydata_with_y$wtp3) 
+lillie.test(Mydata_with_y$ri1) 
+lillie.test(Mydata_with_y$ri2) 
+```
+
+As we can see, none of the response variables behave normally. 
+
+## Correlation Plot
 
 ```{r}
 
@@ -108,7 +124,38 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 ```
 
-## 1.2 Anti-image correlation, Kaiser-Meyer-Olkin and Bartlett's test
+
+## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
+
+```{r}
+Mydata_with_y$avg_wtp <- apply(Mydata_with_y[,34:36], 1, 'mean')
+Mydata_with_y$avg_ri <- apply(Mydata_with_y[,37:38], 1, 'mean')
+```
+
+## Tolerance Value and VIF
+
+### Willingness To Pay 
+
+```{r}
+model_wtp <- lm(avg_wtp ~., data = Mydata_with_y[c(1:33,39)])
+ols_vif_tol(model_wtp)
+```
+
+The VIF are under control, with no values higher than 10. 
+
+### Repurchase Intention
+
+```{r}
+model_ri <- lm(avg_ri ~., data = Mydata_with_y[c(1:33,40)])
+ols_vif_tol(model_ri)
+```
+
+
+The VIF are under control, with no values higher than 10. 
+
+# Orthogonal Factor Analysis
+
+## Anti-image correlation, Kaiser-Meyer-Olkin and Bartlett's test
 
 ### Anti-image Correlation
 
@@ -136,7 +183,7 @@ KMOTEST$KMO
 
 The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9). 
 
-## 1.3 Principal axes factoring with varimax
+## Principal axes factoring with varimax
 
 As we know from literature that there are 9 factors we do a factor analysis with 9. 
 
@@ -182,7 +229,7 @@ problematic_communalities_9
 
 Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
 
-## 1.4 Final Factor Solutions
+## Final Factor Solutions
 
 ```{r}
 
@@ -281,12 +328,6 @@ pattern <- promax$loadings # weights
 scores <- promax$scores
 ```
 
-## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
-
-```{r}
-Mydata_with_y$avg_wtp <- apply(Mydata_with_y[,34:36], 1, 'mean')
-Mydata_with_y$avg_ri <- apply(Mydata_with_y[,37:38], 1, 'mean')
-```
 
 ## Run a regression analysis with the factor scores of the quality dimensions as independent and both the mean score of willingness to pay premium and repurchase intention as dependent variables
 
