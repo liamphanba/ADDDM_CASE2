@@ -67,6 +67,10 @@ Mydata <- read.csv("DATA/Data File_Case_Study_Factor Analysis_MD.csv", header=TR
 Mydata_with_y <- Mydata[,c(5, 9:41, 43:45, 51:52)]
 Mydata_with_y <- na.omit(Mydata_with_y)
 brands <- Mydata_with_y$brand
+brands <- ifelse(brands == 1, "Apple", 
+              ifelse(brands == 2, "Samsung",
+              ifelse(brands == 3, "LG",
+              ifelse(brands == 4, "Motorola", "Other"))))
 Mydata_with_y <- Mydata_with_y[,c(2:39)]
 Mydata_qd <- Mydata_with_y[,1:33]
 rm(Mydata)
@@ -407,7 +411,9 @@ summary(mod4)
 
 Mydata_qd with brands and then compute mean per brand?
 
-1-Apple  2-Samsung  3- LG  4- Motorola  5- Other
+```{r}
+
+```
 
 ## What are points of parity and points of difference for the different brands. 
 
