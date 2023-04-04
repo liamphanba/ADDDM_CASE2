@@ -383,11 +383,9 @@ scores <- promax$scores
 
 ```{r}
 Mydata_lm <- data.frame(scores, Mydata_with_y[, 39:40])
-mod1 <- lm(avg_wtp + avg_ri ~., Mydata_lm)
-mod2 <- lm(avg_wtp ~., Mydata_lm)
-mod3 <- lm(avg_ri ~., Mydata_lm)
+mod2 <- lm(avg_wtp ~., Mydata_lm[,-11])
+mod3 <- lm(avg_ri ~., Mydata_lm[,-10])
 
-summary(mod1)
 summary(mod2)
 summary(mod3)
 ```
@@ -400,7 +398,7 @@ summary(mod3)
 Mydata_lm_2 <- data.frame(Mydata_with_y$avg_ri, brands)
 Mydata_lm_2 <- dummy_cols(Mydata_lm_2, select_columns = 'brands', remove_selected_columns = TRUE, remove_first_dummy = TRUE)
 
-mod4 <- lm(Mydata_with_y.avg_ri ~., Mydata_lm_2)
+mod4 <- lm(Mydata_with_y.avg_ri ~., Mydata_lm_2[-10])
 
 summary(mod4)
 ```
@@ -409,4 +407,9 @@ summary(mod4)
 
 Mydata_qd with brands and then compute mean per brand?
 
+1-Apple  2-Samsung  3- LG  4- Motorola  5- Other
+
 ## What are points of parity and points of difference for the different brands. 
+
+
+
