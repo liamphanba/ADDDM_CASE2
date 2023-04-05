@@ -396,11 +396,11 @@ colnames(promax$loadings) <- c("Serviceability","Performance","Aesthetics_Appear
 
 print(promax$loadings,cutoff = 0.3,sort=TRUE)
 ```
+When looking at the loading's matrix we see the same picture as before apart from the fact that there are even more clear loading patterns. 
 
-```{r}
-structure <- promax$Structure # correlation
-pattern <- promax$loadings # weights
-```
+## Factor scores
+
+Here we calculate the factor scores for every observation and relabel it. 
 
 ```{r}
 Scores <- promax$scores
