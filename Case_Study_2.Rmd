@@ -328,10 +328,12 @@ Comparing the results we see that the pca and fa deliver similar results. Every 
 ```{r}
 PC_communalities_9=data.frame(sort(PC1$communality))
 problematic_communalities_9 <- rownames(PC_communalities_9)[PC_communalities_9<0.5]
-problematic_communalities_9
+problematic_communalities_9 
 ```
 
-It is also observable that now there are no communalities which are below 0.5. So it assures us that we made the right decision before to run with 9 factors instead of 8. 
+## Differences between Factor Analysis and Principal Component Analysis
+
+There are differences in the loadings value (very slightly up to 2 decimals), but the factors are the same with the same questions pattern. It is also observable that now there are no communalities which are below 0.5, So it assures us that we made the right decision before to run with 9 factors instead of 8. Principal component analysis may be better then because the theorical factors are better differentiated.
 
 ## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
 
