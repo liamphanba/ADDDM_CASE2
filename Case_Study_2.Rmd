@@ -316,10 +316,14 @@ Here we run a principal component analysis.
 
 ```{r}
 PC1 <- principal(Mydata_qd, rotate = "varimax", nfactors = 9)
-print(PC1$loadings, cutoff=0.3,sort=TRUE)
+
+colnames(PC1$loadings) <- c("Serviceability","Performance","Aesthetics_Appearance","Ease_of_Use","Features_Versatility","Reliability_Flawlessness","Conformance","Durability","Distinctiveness_Prestige")
+
+print(PC1$loadings,cutoff = 0.3,sort=TRUE)
 ```
 
-Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themself. 
+Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themselves. 
+
 
 ```{r}
 PC_communalities_9=data.frame(sort(PC1$communality))
