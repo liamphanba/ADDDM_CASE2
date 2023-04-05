@@ -510,7 +510,6 @@ The following Factors are given in descending order of their predictive power (c
 
 --------------------------------------------------------------------------------------------------------------
 
-<b>
 
 <center>
 
@@ -520,7 +519,6 @@ The following Factors are given in descending order of their predictive power (c
 
 </center>
 
-<b>
 
 --------------------------------------------------------------------------------------------------------------
 
