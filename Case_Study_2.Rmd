@@ -355,10 +355,10 @@ Total_Variance_Explained
 
 # **Oblique Factor analysis**
 
-Here chose best one from above pca or fa and then change rotation 
+In the following part we will use one of the method above, between Factor Analysis or PCA. Since we got better results in PCA, we will use **Promax** Rotation in the PCA to compute the score. 
 
 ```{r}
-promax <- fa(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
+promax <- principal(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
 ```
 
 ## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
