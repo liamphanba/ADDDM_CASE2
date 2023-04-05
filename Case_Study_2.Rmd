@@ -487,17 +487,18 @@ summ(RI_Brand_Model)
 The results of the regression analysis for repurchase intentions do differ across brand (The brand reference in this regression is **Apple**), since our coefficients are significant and differ from 0 (except **Motorola** which is not significant). Since all brands have negative coefficient, we can conclude that Apple Customer are more willing to repurchase than other customers (across other brands). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. R^2 Squared is better than the previous different model we did until now, with value of 0.52. 
 
 
-## What do the results of these regressions imply? Please compare the brands on the factor scores
-
-
-
-
-
-## Please compare the brands on the factor scores
+## Please compare the brands on the Factor Scores
 
 ```{r}
 Mydata_brands <- data.frame(Scores, brands)
-aggregate(Mydata_brands[,1:9], by = list(Mydata_brands$brands), mean)
+Brands_Scores_Factors <- aggregate(Mydata_brands[,1:9], by = list(Mydata_brands$brands), mean)
+colnames(Brands_Scores_Factors)[1] <- c("Brands")
+Brands_Scores_Factors <- Brands_Scores_Factors %>%                   # Using dplyr functions
+  mutate_if(is.numeric,
+            round,
+            digits = 2)
+
+DT::datatable(Brands_Scores_Factors)
 ```
 
 ## What are points of parity and points of difference for the different brands. 
