@@ -422,6 +422,15 @@ summ(WTP_Model)
           
 The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Features_Versatility**,**Conformance**, **Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.39, which means we don't explain a lot of the variance in our dependent variable **Willingess to Pay (AVG)**. The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected.
 
+#### Residuals Analysis
+
+```{r}
+
+par(mfrow = c(2, 2)) 
+plot(WTP_Model)
+
+```
+
 
 ### Repurchase Intention
 
@@ -431,6 +440,15 @@ summ(RI_Model)
 
 ```
 The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Durability**,**Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.44, which means we don't explain a lot of the variance in our dependent variable **Repurchase Intention (AVG)** but slightly more than the other dependent variable model (**WTP**). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. 
+
+#### Residuals Analysis
+
+```{r}
+
+par(mfrow = c(2, 2)) 
+plot(RI_Model)
+
+```
 
 ## Interpret your results from a managerial perspective
 
@@ -458,17 +476,24 @@ The following Factors are given in descending order of their predictive power (c
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
 ```{r}
-Mydata_lm_2 <- data.frame(Mydata_with_y$avg_ri, brands)
+Mydata_lm_2 <- data.frame(Scores, Mydata_with_y$avg_ri, brands)
 Mydata_lm_2 <- dummy_cols(Mydata_lm_2, select_columns = 'brands', remove_selected_columns = TRUE, remove_first_dummy = TRUE)
 
-RI_Brand_Model <- lm(Mydata_with_y.avg_ri ~., Mydata_lm_2[-10])
+RI_Brand_Model <- lm(Mydata_with_y.avg_ri ~ ., Mydata_lm_2)
 
-summary(RI_Brand_Model)
+summ(RI_Brand_Model)
 ```
+
+The results of the regression analysis for repurchase intentions do differ across brand (The brand reference in this regression is **Apple**), since our coefficients are significant and differ from 0 (except **Motorola** which is not significant). Since all brands have negative coefficient, we can conclude that Apple Customer are more willing to repurchase than other customers (across other brands). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. R^2 Squared is better than the previous different model we did until now, with value of 0.52. 
+
 
 ## What do the results of these regressions imply? Please compare the brands on the factor scores
 
-Mydata_qd with brands and then compute mean per brand?
+
+
+
+
+## Please compare the brands on the factor scores
 
 ```{r}
 Mydata_brands <- data.frame(Scores, brands)
