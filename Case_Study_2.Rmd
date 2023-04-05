@@ -125,7 +125,8 @@ As we can see, none of the response variables behave normally.
 ```{r}
 
 cor_mat <- cor(Mydata_with_y)
-corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.srt=45,tl.cex = 0.5)
+
+corrplot(as.matrix(cor_mat), method="color",type="upper", order="hclust", tl.col="black", tl.srt=45,tl.cex = 0.5, diag=FALSE, sig.level=001)
 
 ```
 
@@ -355,41 +356,104 @@ Total_Variance_Explained
 
 # **Oblique Factor analysis**
 
-In the following part we will use one of the method above, between Factor Analysis or PCA. Since we got better results in PCA, we will use **Promax** Rotation in the PCA to compute the score. 
+In the following part we will use one of the method above, between **Factor Analysis** or **PCA**. Since we got better results in **PCA**, we will use **Promax** Rotation in the **PCA** to compute the score. 
 
 ```{r}
 promax <- principal(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
+colnames(promax$loadings) <- c("Serviceability","Performance","Aesthetics_Appearance","Ease_of_Use","Features_Versatility","Conformance","Reliability_Flawlessness","Durability","Distinctiveness_Prestige")
+
+print(promax$loadings,cutoff = 0.3,sort=TRUE)
 ```
-
-## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
-
-Just between factors --> correlation on scores matrix not using the structure matrix. 
 
 ```{r}
 structure <- promax$Structure # correlation
 pattern <- promax$loadings # weights
 ```
 
+```{r}
+Scores <- promax$scores
+colnames(Scores) <- c("Serviceability","Performance","Aesthetics_Appearance","Ease_of_Use","Features_Versatility","Conformance","Reliability_Flawlessness","Durability","Distinctiveness_Prestige")
+```
+
+## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
+
+```{r}
+
+cor_mat2 <- cor(Scores)
+corrplot(as.matrix(cor_mat2), method="color",type="upper", order="hclust", tl.col="black", tl.srt=45,tl.cex = 0.5, addCoef.col = "black", diag=FALSE, sig.level=001)
+
+```
+
+The highest correlation between Factors is between **Performance** and **Features_Versatility**, which was expected since question 8 has both loading in the PCA loadings with varimax rotation. Overall, most factors are correlated with values in between 0.37 and 0.67, except for **Distinctiveness_Prestige**, which seems not correlated at all with other Factors. If the correlation matrix showed high correlation between Factors, our following attempt to compute a Multiple Linear Regression model would easily fail, because of Multi-linearity issues, and may show over-fit to the model. 
+
 
 ## Compute factor scores for your factors and name and label them appropriately
 
 ```{r}
-scores <- promax$scores
+
+DT::datatable(Scores)
+
 ```
 
+## Compute mean scores for the three **willingness to pay** premium items (wtp1-wtp3) and the two **repurchase intention** items (ri1-ri2).
+
+```{r}
+
+DT::datatable(round(Mydata_with_y[34:40],2))
+
+```
 
 ## Run a regression analysis with the factor scores of the quality dimensions as independent and both the mean score of willingness to pay premium and repurchase intention as dependent variables
 
 ```{r}
-Mydata_lm <- data.frame(scores, Mydata_with_y[, 39:40])
-mod2 <- lm(avg_wtp ~., Mydata_lm[,-11])
-mod3 <- lm(avg_ri ~., Mydata_lm[,-10])
-
-summary(mod2)
-summary(mod3)
+Mydata_lm <- data.frame(Scores, Mydata_with_y[, 39:40])
+WTP_Model <- lm(avg_wtp ~., Mydata_lm[,-11])
+RI_Model <- lm(avg_ri ~., Mydata_lm[,-10])
 ```
+                    
+
+### Willingess To Pay Model
+
+```{r}
+
+summ(WTP_Model)
+
+```
+          
+The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Features_Versatility**,**Conformance**, **Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.39, which means we don't explain a lot of the variance in our dependent variable **Willingess to Pay (AVG)**. The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected.
+
+
+### Repurchase Intention
+
+```{r}
+
+summ(RI_Model)
+
+```
+The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Durability**,**Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.44, which means we don't explain a lot of the variance in our dependent variable **Repurchase Intention (AVG)** but slightly more than the other dependent variable model (**WTP**). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. 
 
 ## Interpret your results from a managerial perspective
+
+### Willingess to Pay (WTP)
+
+The following Factors are given in descending order of their predictive power (coefficient), the most predictive power in the Willingness to Pay Premium to the Customers of Smartphones and thus must be targeted first to get more Willingness to Pay Premium from Customers.
+
+1. **Ease_of_Use**
+2. **Features_Versatility**
+3. **Distinctiveness_Prestige**
+4. **Serviceability**
+5. **Performance**
+6. **Conformance**
+
+### Repurchase Intention (RI)
+
+The following Factors are given in descending order of their predictive power (coefficient), the most predictive power in Repurchase Intention to the Customers of Smartphones and thus must be targeted first to get more Repurchase Intention from Customers.
+
+1. **Performance**
+2. **Ease_of_Use**
+3. **Distinctiveness_Prestige**
+4. **Durability**
+5. **Serviceability**
 
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
@@ -397,9 +461,9 @@ summary(mod3)
 Mydata_lm_2 <- data.frame(Mydata_with_y$avg_ri, brands)
 Mydata_lm_2 <- dummy_cols(Mydata_lm_2, select_columns = 'brands', remove_selected_columns = TRUE, remove_first_dummy = TRUE)
 
-mod4 <- lm(Mydata_with_y.avg_ri ~., Mydata_lm_2[-10])
+RI_Brand_Model <- lm(Mydata_with_y.avg_ri ~., Mydata_lm_2[-10])
 
-summary(mod4)
+summary(RI_Brand_Model)
 ```
 
 ## What do the results of these regressions imply? Please compare the brands on the factor scores
@@ -407,7 +471,7 @@ summary(mod4)
 Mydata_qd with brands and then compute mean per brand?
 
 ```{r}
-Mydata_brands <- data.frame(scores, brands)
+Mydata_brands <- data.frame(Scores, brands)
 aggregate(Mydata_brands[,1:9], by = list(Mydata_brands$brands), mean)
 ```
 
