@@ -93,20 +93,20 @@ DT::datatable(round(Stat_Desc,3))
 
 ```
 
+There is no missing values, kurtosis and skewness are relatively smalls, but kurtosis shows slight flat distributions. The skewness being often negative shows right skewed distribution of the data.
 
-There is no missing values, kurtosis and skewness are relatively smalls, but kurtosis shows slight flat distributions. The skewness being often negative shows right skewed distribution of the data. 
-
-> Comments: We can see that we have 969 observations for 33 questions (covariates), meaning we are above the required rule of thumb by **Frank Harrell's book, Regression Modeling Strategies** which states that for each covariate, 10-20 observations are needed. We would need 33x10 = 330 observations or 33x20 = 660 observations, and have way above with 969 observations [330 or 660 required]. None of the covariates are behaving normally.  
+> Comments: We can see that we have 969 observations for 33 questions (covariates), meaning we are above the required rule of thumb by **Frank Harrell's book, Regression Modeling Strategies** which states that for each covariate, 10-20 observations are needed. We would need 33x10 = 330 observations or 33x20 = 660 observations, and have way above with 969 observations [330 or 660 required]. None of the covariates are behaving normally.
 
 ## **Histograms**
 
-We can see the normality not full-filled visually as well. 
+We can see the normality not full-filled visually as well.
 
 ```{r}
 
 plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd1"))
 
 ```
+
 ## **Normality Test on Y**
 
 ```{r}
@@ -117,7 +117,7 @@ lillie.test(Mydata_with_y$ri1)
 lillie.test(Mydata_with_y$ri2) 
 ```
 
-As we can see, none of the response variables behave normally. 
+As we can see, none of the response variables behave normally.
 
 ## Correlation Plot
 
@@ -128,7 +128,7 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 ```
 
-We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6. 
+We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6.
 
 # Multiple Linear Regression on All Covariates
 
@@ -141,14 +141,14 @@ Mydata_with_y$avg_ri <- apply(Mydata_with_y[,37:38], 1, 'mean')
 
 ## Tolerance Value and VIF
 
-### Willingness To Pay 
+### Willingness To Pay
 
 ```{r}
 model_wtp <- lm(avg_wtp ~., data = Mydata_with_y[c(1:33,39)])
 ols_vif_tol(model_wtp)
 ```
 
-The VIF are under control, with no values higher than 10. 
+The VIF are under control, with no values higher than 10.
 
 ### Repurchase Intention
 
@@ -157,8 +157,7 @@ model_ri <- lm(avg_ri ~., data = Mydata_with_y[c(1:33,40)])
 ols_vif_tol(model_ri)
 ```
 
-
-The VIF are under control, with no values higher than 10. 
+The VIF are under control, with no values higher than 10.
 
 Thus we shouldn't worry to much of the multicolinearity problem.
 
@@ -173,7 +172,7 @@ plot(model_wtp)
 
 ```
 
-As we can see, the normality and homoskedasticity of the linear regression are not full-filled, seeing some patterns in the scale-location plot as well as out of place residuals in the Normal Q-Q on both sides of the plot. 
+As we can see, the normality and homoskedasticity of the linear regression are not full-filled, seeing some patterns in the scale-location plot as well as out of place residuals in the Normal Q-Q on both sides of the plot.
 
 ### Repurchase Intention
 
@@ -195,6 +194,7 @@ model_wtp <- lm(avg_wtp ~., data = Mydata_with_y[c(1:33,39)])
 model_wtp_beta=lm.beta(model_wtp)
 summary(model_wtp_beta)
 ```
+
 The adjusted R-squared is very low, thus only 39.7% of the variance on our depend variable is explained by the covariates, but the F-statistic is significant, showing that the covariates are indeed explaining something in the relation to **Willingness to Pay**. Variables qd23, qd5 and qd1 are significants at 1%, and qd23 being the most strongest predictive one.
 
 ### Repurchase Intention
@@ -226,7 +226,7 @@ All values are above 0.6 so a good factor analysis can be done. Only one value i
 bart_spher(Mydata_qd)
 ```
 
-There is a correlation between variables, and the assumptions are not met since we have above 5 variables 
+There is a correlation between variables, and the assumptions are not met since we have above 5 variables
 
 ### Kaiser-Meyer-Olkin
 
@@ -235,11 +235,11 @@ KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
 
-The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9). 
+The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (\>0.9).
 
 ## Principal axes factoring with varimax
 
-As we know from literature that there are 9 factors we do a factor analysis with 9. 
+As we know from literature that there are 9 factors we do a factor analysis with 9.
 
 ```{r}
 fa_result <- fa(Mydata_qd, rotate = "varimax", fm = "pa")
@@ -249,14 +249,14 @@ plot(fa_result$e.values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot"
 factors_kaiser <- sum(fa_result$e.values>1)
 ```
 
-Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense. 
+Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense.
 
 ```{r}
 fa_result_8 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 8)
 print(fa_result_8$loadings, cutoff=0.3,sort=TRUE)
 ```
 
-We see that every question is loaded in a factor except for the question 4 and 23. We get similar results when we look at the communalities. 
+We see that every question is loaded in a factor except for the question 4 and 23. We get similar results when we look at the communalities.
 
 ```{r}
 FA_communalities_8=data.frame(sort(fa_result_8$communality))
@@ -264,9 +264,9 @@ problematic_communalities_8 <- rownames(FA_communalities_8)[FA_communalities_8<0
 problematic_communalities_8
 ```
 
-We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23. 
+We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23.
 
-As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors. 
+As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors.
 
 ```{r}
 fa_result_9 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 9)
@@ -281,7 +281,7 @@ problematic_communalities_9 <- rownames(FA_communalities_9)[FA_communalities_9<0
 problematic_communalities_9
 ```
 
-Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
+Again we see that thetige. question 4 and 23 are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is prestige.
 
 ## Final Factor Solutions
 
@@ -315,18 +315,18 @@ DT::datatable(All_Factors, caption = "All Factors")
 
 ## Do all variables show clear loading patterns?
 
-Yes they do. Factor 8 is the only one which has a loading on an other factor as well that is higher than 0.3. 
+Yes they do. Factor 8 is the only one which has a loading on an other factor as well that is higher than 0.3.
 
-## Principal component analysis 
+## Principal component analysis
 
-Here we run a principal component analysis. 
+Here we run a principal component analysis.
 
 ```{r}
 PC1 <- principal(Mydata_qd, rotate = "varimax", nfactors = 9)
 print(PC1$loadings, cutoff=0.3,sort=TRUE)
 ```
 
-Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themself. 
+Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themself.
 
 ```{r}
 PC_communalities_9=data.frame(sort(PC1$communality))
@@ -334,20 +334,17 @@ problematic_communalities_9 <- rownames(PC_communalities_9)[PC_communalities_9<0
 problematic_communalities_9
 ```
 
-It is also observable that now there are no communalities which are below 0.5. So it assures us that we made the right decision before to run with 9 factors instead of 8. 
+It is also observable that now there are no communalities which are below 0.5. So it assures us that we made the right decision before to run with 9 factors instead of 8.
 
 ## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
 
 [Explanation](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
 
-eigenvalues of factors explain how much variance of the assigned questions they cover. 
-
-
-
+eigenvalues of factors explain how much variance of the assigned questions they cover.
 
 BELOW IS WRONG OR NOT NEEDED
 
-The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them. 
+The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them.
 
 ```{r}
 EigenValue=PC1$values
@@ -359,29 +356,26 @@ Total_Variance_Explained
 
 # Oblique Factor analysis
 
-
-Here chose best one from above pca or fa and then change rotation 
+Here chose best one from above pca or fa and then change rotation
 
 ```{r}
 promax <- fa(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
 ```
 
-## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
+## How high are the factors correlated and what is the highest correlation between factors. What does this mean -- please explain
 
-Just between factors --> correlation on scores matrix not using the structure matrix. 
+Just between factors --\> correlation on scores matrix not using the structure matrix.
 
 ```{r}
 structure <- promax$Structure # correlation
 pattern <- promax$loadings # weights
 ```
 
-
 ## Compute factor scores for your factors and name and label them appropriately
 
 ```{r}
 scores <- promax$scores
 ```
-
 
 ## Run a regression analysis with the factor scores of the quality dimensions as independent and both the mean score of willingness to pay premium and repurchase intention as dependent variables
 
@@ -416,8 +410,4 @@ Mydata_brands <- data.frame(scores, brands)
 aggregate(Mydata_brands[,1:9], by = list(Mydata_brands$brands), mean)
 ```
 
-## What are points of parity and points of difference for the different brands. 
-
-
-
-
+## What are points of parity and points of difference for the different brands.
