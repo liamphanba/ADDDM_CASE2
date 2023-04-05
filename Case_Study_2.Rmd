@@ -518,3 +518,16 @@ DT::datatable(Brands_Scores_Factors)
 ```
 
 We see that **Apple** is the only brand that has a positive score for all of the factors. It might not always have the highest score but it is consistently good in every sector. For example **Motorola** is better in the serviceability of their phones but lacks in the aesthetics and appearance. It is also observable that the other phone brands as well as LG are way behind and get a negative score on all the factors. Also **Samsung** seems to be way of as they have negative scores on everything except for reliability where they are still behind apple. The only brand that outperforms **Apple** in some categories is **Motorola**. They beat **Apple** in Serviceability and Features and visibility. So in general it can be said that **Apple** is clearly the winner in this comparison and is way ahead of its competitors.
+
+
+#References
+
+[factor analysis: a short introduction, part 1](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
+
+[https://lhbikos.github.io/ReC_Psychometrics/PCA.html](https://lhbikos.github.io/ReC_Psychometrics/PCA.html)
+
+[Multivariate Multiple Linear Regression](https://www.statstest.com/multivariate-multiple-linear-regression/)
+
+[Tools for summarizing and visualizing regression models](https://cran.r-project.org/web/packages/jtools/vignettes/summ.html)
+
+[Round Numeric Columns of Data Frame with Character & Factor Variables in R (2 Examples)](https://statisticsglobe.com/round-numeric-columns-of-data-frame-in-r)
