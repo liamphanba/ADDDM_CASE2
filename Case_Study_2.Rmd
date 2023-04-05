@@ -252,12 +252,16 @@ factors_kaiser <- sum(fa_result$e.values>1)
 
 Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense. 
 
+### 8 Factors Loadings
+
 ```{r}
 fa_result_8 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 8)
 print(fa_result_8$loadings, cutoff=0.3,sort=TRUE)
 ```
 
 We see that every question is loaded in a factor except for the question 4 and 23. We get similar results when we look at the communalities. 
+
+### 8 Factors Communalities
 
 ```{r}
 FA_communalities_8=data.frame(sort(fa_result_8$communality))
@@ -267,14 +271,18 @@ problematic_communalities_8
 
 We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23. 
 
+
+### 9 Factors Loadings
+
 As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors. 
+
 
 ```{r}
 fa_result_9 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 9)
 print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
 ```
 
-We can observe that the loadings for factor 9 are solely based on question 4 and question 23. We rerun the communalities
+We can observe that the loadings for factor 9 are solely based on question 4 and question 23. We rerun the communalities. 
 
 ```{r}
 FA_communalities_9=data.frame(sort(fa_result_9$communality))
