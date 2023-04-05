@@ -384,25 +384,9 @@ There are differences in the loadings value (very slightly up to 2 decimals), bu
 
 ## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
 
-SS loadings from the above output refers to the Eigenvalues of our Factors, thus we can keep only the one having Eigenvalues > 1, which would keep all of them, but we still see that Factor **Distinctiveness_Prestige** has eigenvalue of 1.2 which is close to 1.
+SS loadings from the above output refers to the Eigenvalues of our Factors, thus we can keep only the one having Eigenvalues > 1, which would keep all of them, but we still see that Factor **Distinctiveness_Prestige** has eigenvalue of 1.2 which is close to 1. the eigenvalues in this case expresses how much variance the factor explains according to the assigned questions. For example the first factor (Serviceability) expresses 94.4% percent (4.720/5) of the variance of the questions in the factor.
 
-The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them.
-
-### Eigenvalues of Questions
-
-Here we see the eigenvalues of the questions and how much variance they explain. 
-
-```{r}
-EigenValue=PC1$values
-Variance=EigenValue/ncol(Mydata_qd)*100
-SumVariance=cumsum(EigenValue/ncol(Mydata_qd))
-Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Variance[Variance>0],Total_Variance=SumVariance[Variance>0])
-Total_Variance_Explained
-```
-
-
-
-# **Oblique Factor analysis**
+# Oblique Factor analysis
 
 In the following part we will use one of the method above, between **Factor Analysis** or **PCA**. Since we got better results in **PCA**, we will use **Promax** Rotation in the **PCA** to compute the score.
 
