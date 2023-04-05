@@ -409,6 +409,8 @@ colnames(Scores) <- c("Serviceability","Performance","Aesthetics_Appearance","Ea
 
 ## How high are the factors correlated and what is the highest correlation between factors. What does this mean – please explain
 
+To see how much the factors are correlated we compute the correlation matrix on the scores obtained beforehand. 
+
 ```{r}
 
 cor_mat2 <- cor(Scores)
@@ -418,8 +420,9 @@ corrplot(as.matrix(cor_mat2), method="color",type="upper", order="hclust", tl.co
 
 The highest correlation between Factors is between **Performance** and **Features_Versatility**, which was expected since question 8 has both loading in the PCA loadings with varimax rotation. Overall, most factors are correlated with values in between 0.37 and 0.67, except for **Distinctiveness_Prestige**, which seems not correlated at all with other Factors. If the correlation matrix showed high correlation between Factors, our following attempt to compute a Multiple Linear Regression model would easily fail, because of Multi-linearity issues, and may show over-fit to the model.
 
-
 ## Compute factor scores for your factors and name and label them appropriately
+
+As we did this beforehand we will just show the resulting scores. 
 
 ```{r}
 
@@ -429,6 +432,8 @@ DT::datatable(Scores)
 
 ## Compute mean scores for the three **willingness to pay** premium items (wtp1-wtp3) and the two **repurchase intention** items (ri1-ri2).
 
+As this was done in the beginning of the document we again just show the resulting averages and the columns from which they are computed from. 
+
 ```{r}
 
 DT::datatable(round(Mydata_with_y[34:40],2))
@@ -437,14 +442,17 @@ DT::datatable(round(Mydata_with_y[34:40],2))
 
 ## Run a regression analysis with the factor scores of the quality dimensions as independent and both the mean score of willingness to pay premium and repurchase intention as dependent variables
 
+Here we run two regressions one for WTP and one for RI. 
+
 ```{r}
 Mydata_lm <- data.frame(Scores, Mydata_with_y[, 39:40])
 WTP_Model <- lm(avg_wtp ~., Mydata_lm[,-11])
 RI_Model <- lm(avg_ri ~., Mydata_lm[,-10])
 ```
 
-
 ### Willingess To Pay Model
+
+Now we look at the model of WTP
 
 ```{r}
 
@@ -456,6 +464,8 @@ The following Factors are significant: **Serviceability**, **Performance**, **Ea
 
 #### Residuals Analysis
 
+And we do the residual analysis.
+
 ```{r}
 
 par(mfrow = c(2, 2))
@@ -463,8 +473,9 @@ plot(WTP_Model)
 
 ```
 
-
 ### Repurchase Intention
+
+Down below the summary of the RI Model. 
 
 ```{r}
 
@@ -476,6 +487,8 @@ The following Factors are significant: **Serviceability**, **Performance**, **Ea
 
 #### Residuals Analysis
 
+And also for this model the residual analysis. 
+
 ```{r}
 
 par(mfrow = c(2, 2))
@@ -484,6 +497,8 @@ plot(RI_Model)
 ```
 
 ## Interpret your results from a managerial perspective
+
+Now we interpret the results obtained from a managerial perspective. 
 
 ### Willingess to Pay (WTP)
 
@@ -506,10 +521,7 @@ The following Factors are given in descending order of their predictive power (c
 4. **Durability**
 5. **Serviceability**
 
-
-
 --------------------------------------------------------------------------------------------------------------
-
 
 <center>
 
@@ -519,10 +531,11 @@ The following Factors are given in descending order of their predictive power (c
 
 </center>
 
-
 --------------------------------------------------------------------------------------------------------------
 
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
+
+To see if the results differ we fit a regression for RI with the brands as dummy coefficients. 
 
 ```{r}
 Mydata_lm_2 <- data.frame(Scores, Mydata_with_y$avg_ri, brands)
@@ -534,7 +547,6 @@ summ(RI_Brand_Model)
 ```
 
 The results of the regression analysis for repurchase intentions do differ across brand (The brand reference in this regression is **Apple**), since our coefficients are significant and differ from 0 (except **Motorola** which is not significant). Since all brands have negative coefficient, we can conclude that Apple Customer are more willing to repurchase than other customers (across other brands). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. R^2 Squared is better than the previous different model we did until now, with value of 0.52.
-
 
 ## Please compare the brands on the Factor Scores and point out the differences
 
@@ -553,7 +565,6 @@ DT::datatable(Brands_Scores_Factors)
 ```
 
 We see that **Apple** is the only brand that has a positive score for all of the factors. It might not always have the highest score but it is consistently good in every sector. For example **Motorola** is better in the serviceability of their phones but lacks in the aesthetics and appearance. It is also observable that the other phone brands as well as LG are way behind and get a negative score on all the factors. Also **Samsung** seems to be way of as they have negative scores on everything except for reliability where they are still behind apple. The only brand that outperforms **Apple** in some categories is **Motorola**. They beat **Apple** in Serviceability and Features and visibility. So in general it can be said that **Apple** is clearly the winner in this comparison and is way ahead of its competitors.
-
 
 # References
 
