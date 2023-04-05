@@ -157,7 +157,11 @@ Mydata_with_y$avg_ri <- apply(Mydata_with_y[,37:38], 1, 'mean')
 
 ## Tolerance Value and VIF
 
-### Willingness To Pay 
+Next we look at the variable importance of each question for every dependent variable.
+
+### Willingness To Pay Premium
+
+Here we fit the model of willingnes to pay premium and do the variable importance.
 
 ```{r}
 model_wtp <- lm(avg_wtp ~., data = Mydata_with_y[c(1:33,39)])
@@ -168,19 +172,23 @@ The VIF are under control, with no values higher than 10.
 
 ### Repurchase Intention
 
+Here we to the same thing for the repurchase intention. 
+
 ```{r}
 model_ri <- lm(avg_ri ~., data = Mydata_with_y[c(1:33,40)])
 ols_vif_tol(model_ri)
 ```
 
 
-The VIF are under control, with no values higher than 10. 
-
-Thus we shouldn't worry to much of the multicolinearity problem.
+The VIF are under control, with no values higher than 10. Thus we shouldn't worry to much of the multicolinearity problem.
 
 ## Residuals
 
-### Willingness to Pay
+Now we look at the residuals of the WTP and RI.
+
+### Willingness to Pay Premium
+
+Down below is the residual analysis for WTP. 
 
 ```{r}
 
