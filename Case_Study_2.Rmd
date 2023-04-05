@@ -506,3 +506,20 @@ DT::datatable(Brands_Scores_Factors)
 
 
 
+
+
+
+
+#References
+
+[factor analysis: a short introduction, part 1](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
+
+[https://lhbikos.github.io/ReC_Psychometrics/PCA.html](https://lhbikos.github.io/ReC_Psychometrics/PCA.html)
+
+[Multivariate Multiple Linear Regression](https://www.statstest.com/multivariate-multiple-linear-regression/)
+
+[Tools for summarizing and visualizing regression models](https://cran.r-project.org/web/packages/jtools/vignettes/summ.html)
+
+[Round Numeric Columns of Data Frame with Character & Factor Variables in R (2 Examples)](https://statisticsglobe.com/round-numeric-columns-of-data-frame-in-r)
+
+
