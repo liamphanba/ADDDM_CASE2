@@ -98,7 +98,7 @@ There is no missing values, kurtosis and skewness are relatively smalls, but kur
 
 > Comments: We can see that we have 969 observations for 33 questions (covariates), meaning we are above the required rule of thumb by **Frank Harrell's book, Regression Modeling Strategies** which states that for each covariate, 10-20 observations are needed. We would need 33x10 = 330 observations or 33x20 = 660 observations, and have way above with 969 observations [330 or 660 required]. None of the covariates are behaving normally.  
 
-## **Histograms**
+## Histograms
 
 We can see the normality not full-filled visually as well. 
 
@@ -107,7 +107,7 @@ We can see the normality not full-filled visually as well.
 plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd1"))
 
 ```
-## **Normality Test on Y**
+## Normality Test on Y
 
 ```{r}
 lillie.test(Mydata_with_y$wtp1) 
@@ -290,11 +290,22 @@ problematic_communalities_9 <- rownames(FA_communalities_9)[FA_communalities_9<0
 problematic_communalities_9
 ```
 
-Again we see that thetige.  question 4 and 23 are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is prestige. 
+Again we see that question **4** and **23** are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is **Prestige**. 
+
+
+## Factors Labels based on Literature 
+
+```{r}
+
+colnames(fa_result_9$loadings) <- c("Serviceability","Performance","Aesthetics_Appearance","Ease_of_Use","Reliability_Flawlessness","Features_Versatility","Conformance","Durability","Distinctiveness_Prestige")
+
+print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
+
+```
 
 ## Do all variables show clear loading patterns?
 
-Yes they do. Factor 8 is the only one which has a loading on an other factor as well that is higher than 0.3. 
+Yes they do. Question 8 is the only one which has a loading on an other factor as well that is higher than 0.3. 
 
 ## Principal component analysis 
 
@@ -320,8 +331,6 @@ It is also observable that now there are no communalities which are below 0.5. S
 [Explanation](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
 
 eigenvalues of factors explain how much variance of the assigned questions they cover. 
-
-
 
 
 BELOW IS WRONG OR NOT NEEDED
