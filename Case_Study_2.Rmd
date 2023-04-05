@@ -51,7 +51,7 @@ library(GPArotation)
 
 ```
 
-# Data
+# **Data**
 
 > . The source is thereby listed below.
 
@@ -131,7 +131,7 @@ corrplot(as.matrix(cor_mat), type="upper", order="hclust", tl.col="black", tl.sr
 
 We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6. 
 
-# Multiple Linear Regression on All Covariates
+# **Multiple Linear Regression on All Covariates**
 
 ## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
 
@@ -208,7 +208,7 @@ summary(model_ri_beta)
 
 The adjusted R-squared is very low, thus only 45% of the variance on our depend variable is explained by the covariates, but the F-statistic is significant, showing that the covariates are indeed explaining something in the relation to **Repurchase Intention**. Variables qd30, qd23, qd18 and qd5 are significant (at different alpha level: 1% and 5%), and qd5 being the most strongest predictive one.
 
-# Orthogonal Factor Analysis
+# **Orthogonal Factor Analysis**
 
 ## Anti-image correlation, Kaiser-Meyer-Olkin and Bartlett's test
 
@@ -333,18 +333,15 @@ problematic_communalities_9
 
 ## Differences between Factor Analysis and Principal Component Analysis
 
-There are differences in the loadings value (very slightly up to 2 decimals), but the factors are the same with the same questions pattern. It is also observable that now there are no communalities which are below 0.5, So it assures us that we made the right decision before to run with 9 factors instead of 8. Principal component analysis may be better then because the theorical factors are better differentiated.
+There are differences in the loadings value (very slightly up to 2 decimals), but the factors are the same with the same questions pattern. It is also observable that now there are no communalities which are below 0.5, So it assures us that we made the right decision before to run with 9 factors instead of 8. Principal component analysis may be better then because the theoretical factors are better differentiated. This is why we will continue with PCA in the remainder of this exercise. 
 
 ## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
 
-[Explanation](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
-
-eigenvalues of factors explain how much variance of the assigned questions they cover. 
-
-
-BELOW IS WRONG OR NOT NEEDED
+SS loadings from the above output refers to the Eigenvalues of our Factors, thus we can keep only the one having Eigenvalues > 1, which would keep all of them, but we still see that Factor **Distinctiveness_Prestige** has eigenvalue of 1.2 which is close to 1. 
 
 The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them. 
+
+### Eigenvalues of Questions 
 
 ```{r}
 EigenValue=PC1$values
@@ -354,8 +351,9 @@ Total_Variance_Explained=cbind(EigenValue=EigenValue[EigenValue>0],Variance=Vari
 Total_Variance_Explained
 ```
 
-# Oblique Factor analysis
 
+
+# **Oblique Factor analysis**
 
 Here chose best one from above pca or fa and then change rotation 
 
