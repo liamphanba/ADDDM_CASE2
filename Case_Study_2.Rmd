@@ -308,7 +308,7 @@ print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
 
 ## Do all variables show clear loading patterns?
 
-Yes they do. Question 8 is the only one which has a loading on an other factor as well that is higher than 0.3. 
+Yes they do. Question 8 is the only one which has a loading on an other factor as well that is higher than 0.3. Question 8 is related to having extra-features and if they do work, which is why it makes sense to see both **Performance** and **Features-Versality** together. 
 
 ## Principal component analysis 
 
