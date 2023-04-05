@@ -47,6 +47,7 @@ library(lm.beta)
 library(RColorBrewer)
 library(tidyverse)
 library(fastDummies)
+library(GPArotation)
 
 ```
 
@@ -242,12 +243,14 @@ There is a correlation between variables. since we reject the H0 hypothesis (whi
 
 As we know from literature that there are 9 factors we do a factor analysis with 9. 
 
-```{r}
+```{r, results=FALSE}
+
 fa_result <- fa(Mydata_qd, rotate = "varimax", fm = "pa")
 
 plot(fa_result$e.values,xlab="Factor Number",ylab="Eigenvalue",main="Scree plot",cex.lab=1.2,cex.axis=1.2,cex.main=1.8)+abline(h=1)
 
 factors_kaiser <- sum(fa_result$e.values>1)
+
 ```
 
 Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense. 
