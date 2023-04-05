@@ -68,7 +68,7 @@ Mydata <- read.csv("DATA/Data File_Case_Study_Factor Analysis_MD.csv", header=TR
 Mydata_with_y <- Mydata[,c(5, 9:41, 43:45, 51:52)]
 Mydata_with_y <- na.omit(Mydata_with_y)
 brands <- Mydata_with_y$brand
-brands <- ifelse(brands == 1, "Apple", 
+brands <- ifelse(brands == 1, "Apple",
               ifelse(brands == 2, "Samsung",
               ifelse(brands == 3, "LG",
               ifelse(brands == 4, "Motorola", "Other"))))
@@ -79,14 +79,14 @@ rm(Mydata)
 
 ## Data Analysis
 
-Here we look for Na's in the data. 
+Here we look for Na's in the data.
 
 ```{r, include=FALSE}
 list_na =colnames(Mydata_with_y)[apply(Mydata_with_y,2,anyNA)]
 list_na
 ```
 
-We see that there are none so we can continue with our Analysis without a problem. 
+We see that there are none so we can continue with our Analysis without a problem.
 
 ## Data Statistics Summary
 
@@ -101,13 +101,13 @@ DT::datatable(round(Stat_Desc,3))
 ```
 
 
-There is no missing values, kurtosis and skewness are relatively smalls, but kurtosis shows slight flat distributions. The skewness being often negative shows right skewed distribution of the data. 
+There is no missing values, kurtosis and skewness are relatively smalls, but kurtosis shows slight flat distributions. The skewness being often negative shows right skewed distribution of the data.
 
 > Comments: We can see that we have 969 observations for 33 questions (covariates), meaning we are above the required rule of thumb by **Frank Harrell's book, Regression Modeling Strategies** which states that for each covariate, 10-20 observations are needed. We would need 33x10 = 330 observations or 33x20 = 660 observations, and have way above with 969 observations [330 or 660 required]. None of the covariates are behaving normally.  
 
 ## Histograms
 
-We can see the normality not full-filled visually as well. 
+We can see the normality not full-filled visually as well.
 
 ```{r}
 
@@ -116,17 +116,17 @@ plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd
 ```
 ## Normality Test on Y
 
-To see if the y's are normally distributed we do a lillie.test on them. 
+To see if the y's are normally distributed we do a lillie.test on them.
 
 ```{r}
-lillie.test(Mydata_with_y$wtp1) 
-lillie.test(Mydata_with_y$wtp2) 
-lillie.test(Mydata_with_y$wtp3) 
-lillie.test(Mydata_with_y$ri1) 
-lillie.test(Mydata_with_y$ri2) 
+lillie.test(Mydata_with_y$wtp1)
+lillie.test(Mydata_with_y$wtp2)
+lillie.test(Mydata_with_y$wtp3)
+lillie.test(Mydata_with_y$ri1)
+lillie.test(Mydata_with_y$ri2)
 ```
 
-As we can see none of the response variables behave normally. 
+As we can see none of the response variables behave normally.
 
 ## Correlation Plot
 
@@ -140,15 +140,15 @@ corrplot(as.matrix(cor_mat), method="color",type="upper", order="hclust", tl.col
 
 ```
 
-We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6. 
+We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6.
 
 # Multiple Linear Regression on All Covariates
 
-In this part we fit a multiple linear regression on the data. 
+In this part we fit a multiple linear regression on the data.
 
 ## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
 
-To do so we need to calculate the average of the wtp and the ri items. 
+To do so we need to calculate the average of the wtp and the ri items.
 
 ```{r}
 Mydata_with_y$avg_wtp <- apply(Mydata_with_y[,34:36], 1, 'mean')
@@ -168,7 +168,7 @@ model_wtp <- lm(avg_wtp ~., data = Mydata_with_y[c(1:33,39)])
 ols_vif_tol(model_wtp)
 ```
 
-The VIF are under control, with no values higher than 10. 
+The VIF are under control, with no values higher than 10.
 
 ### Repurchase Intention
 
@@ -192,18 +192,18 @@ Down below is the residual analysis for WTP.
 
 ```{r}
 
-par(mfrow = c(2, 2)) 
+par(mfrow = c(2, 2))
 plot(model_wtp)
 
 ```
 
-As we can see, the normality and homoskedasticity of the linear regression are not full-filled, seeing some patterns in the scale-location plot as well as out of place residuals in the Normal Q-Q on both sides of the plot. 
+As we can see, the normality and homoskedasticity of the linear regression are not full-filled, seeing some patterns in the scale-location plot as well as out of place residuals in the Normal Q-Q on both sides of the plot.
 
 ### Repurchase Intention
 
 ```{r}
 
-par(mfrow = c(2, 2)) 
+par(mfrow = c(2, 2))
 plot(model_ri)
 
 ```
@@ -251,7 +251,7 @@ KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
 
-The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9), which means we can use Factor Analysis. 
+The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9), which means we can use Factor Analysis.
 
 ### Bartlett's test
 
@@ -264,7 +264,7 @@ There is a correlation between variables. since we reject the H0 hypothesis (whi
 
 ## Principal axes factoring with varimax
 
-As we know from literature that there are 9 factors we do a factor analysis with 9. 
+As we know from literature that there are 9 factors we do a factor analysis with 9.
 
 ```{r, results=FALSE}
 
@@ -276,7 +276,7 @@ factors_kaiser <- sum(fa_result$e.values>1)
 
 ```
 
-Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense. 
+Kaiser criterion gives `r factors_kaiser` factors, scree-test gives 10. From literature we know that there should be 9 factors. We first do a factor analysis with 8 factors to see if it makes sense.
 
 ### 8 Factors Loadings
 
@@ -285,7 +285,7 @@ fa_result_8 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 8)
 print(fa_result_8$loadings, cutoff=0.3,sort=TRUE)
 ```
 
-We see that every question is loaded in a factor except for the question 4 and 23. We get similar results when we look at the communalities. 
+We see that every question is loaded in a factor except for the question 4 and 23. We get similar results when we look at the communalities.
 
 ### 8 Factors Communalities
 
@@ -295,12 +295,12 @@ problematic_communalities_8 <- rownames(FA_communalities_8)[FA_communalities_8<0
 problematic_communalities_8
 ```
 
-We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23. 
+We see that there are two communalities which are below 0.5. They are fittingly for qd4 and qd23.
 
 
 ### 9 Factors Loadings
 
-As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors. 
+As by literature there are 9 factors we rerun the factor analysis to see the loadings for 9 factors.
 
 
 ```{r}
@@ -308,7 +308,7 @@ fa_result_9 <- fa(Mydata_qd, rotate = "varimax", fm = "pa", nfactors = 9)
 print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
 ```
 
-We can observe that the loadings for factor 9 are solely based on question 4 and question 23. We rerun the communalities. 
+We can observe that the loadings for factor 9 are solely based on question 4 and question 23. We rerun the communalities.
 
 ```{r}
 FA_communalities_9=data.frame(sort(fa_result_9$communality))
@@ -316,10 +316,10 @@ problematic_communalities_9 <- rownames(FA_communalities_9)[FA_communalities_9<0
 problematic_communalities_9
 ```
 
-Again we see that question **4** and **23** are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is **Prestige**. 
+Again we see that question **4** and **23** are problematic. To see if we should exclude them we look at the questionnaire. Both question related to prestige therefore we leave them in and factor 9 is **Prestige**.
 
 
-## Factors Labels based on Literature 
+## Factors Labels based on Literature
 
 ```{r}
 
@@ -331,11 +331,11 @@ print(fa_result_9$loadings, cutoff=0.3,sort=TRUE)
 
 ## Do all variables show clear loading patterns?
 
-Yes they do. Question 8 is the only one which has a loading on an other factor as well that is higher than 0.3. Question 8 is related to having extra-features and if they do work, which is why it makes sense to see both **Performance** and **Features-Versality** together. 
+Yes they do. Question 8 is the only one which has a loading on an other factor as well that is higher than 0.3. Question 8 is related to having extra-features and if they do work, which is why it makes sense to see both **Performance** and **Features-Versality** together.
 
-## Principal component analysis 
+## Principal component analysis
 
-Here we run a principal component analysis. 
+Here we run a principal component analysis.
 
 ```{r}
 PC1 <- principal(Mydata_qd, rotate = "varimax", nfactors = 9)
@@ -345,26 +345,26 @@ colnames(PC1$loadings) <- c("Serviceability","Performance","Aesthetics_Appearanc
 print(PC1$loadings,cutoff = 0.3,sort=TRUE)
 ```
 
-Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themselves. 
+Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loadings themselves.
 
 
 ```{r}
 PC_communalities_9=data.frame(sort(PC1$communality))
 problematic_communalities_9 <- rownames(PC_communalities_9)[PC_communalities_9<0.5]
-problematic_communalities_9 
+problematic_communalities_9
 ```
 
 ## Differences between Factor Analysis and Principal Component Analysis
 
-There are differences in the loadings value (very slightly up to 2 decimals), but the factors are the same with the same questions pattern. It is also observable that now there are no communalities which are below 0.5, So it assures us that we made the right decision before to run with 9 factors instead of 8. Principal component analysis may be better then because the theoretical factors are better differentiated. This is why we will continue with PCA in the remainder of this exercise. 
+There are differences in the loadings value (very slightly up to 2 decimals), but the factors are the same with the same questions pattern. It is also observable that now there are no communalities which are below 0.5, So it assures us that we made the right decision before to run with 9 factors instead of 8. Principal component analysis may be better then because the theoretical factors are better differentiated. This is why we will continue with PCA in the remainder of this exercise.
 
 ## What do the eigenvalues of the factors/quality dimensions tell us about their relevance for repurchase behaviour?
 
-SS loadings from the above output refers to the Eigenvalues of our Factors, thus we can keep only the one having Eigenvalues > 1, which would keep all of them, but we still see that Factor **Distinctiveness_Prestige** has eigenvalue of 1.2 which is close to 1. 
+SS loadings from the above output refers to the Eigenvalues of our Factors, thus we can keep only the one having Eigenvalues > 1, which would keep all of them, but we still see that Factor **Distinctiveness_Prestige** has eigenvalue of 1.2 which is close to 1.
 
-The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them. 
+The eigenvalues of the questions tell us how much variance is explained by the variables. The bigger the eigenvalue, the bigger the explained variance. To showcase this we show the eigenvalues of the principal component analysis and how much variance is explained by them.
 
-### Eigenvalues of Questions 
+### Eigenvalues of Questions
 
 ```{r}
 EigenValue=PC1$values
@@ -378,7 +378,7 @@ Total_Variance_Explained
 
 # **Oblique Factor analysis**
 
-In the following part we will use one of the method above, between **Factor Analysis** or **PCA**. Since we got better results in **PCA**, we will use **Promax** Rotation in the **PCA** to compute the score. 
+In the following part we will use one of the method above, between **Factor Analysis** or **PCA**. Since we got better results in **PCA**, we will use **Promax** Rotation in the **PCA** to compute the score.
 
 ```{r}
 promax <- principal(Mydata_qd, oblique.scores = TRUE, rotate = 'promax', nfactors = 9)
@@ -406,7 +406,7 @@ corrplot(as.matrix(cor_mat2), method="color",type="upper", order="hclust", tl.co
 
 ```
 
-The highest correlation between Factors is between **Performance** and **Features_Versatility**, which was expected since question 8 has both loading in the PCA loadings with varimax rotation. Overall, most factors are correlated with values in between 0.37 and 0.67, except for **Distinctiveness_Prestige**, which seems not correlated at all with other Factors. If the correlation matrix showed high correlation between Factors, our following attempt to compute a Multiple Linear Regression model would easily fail, because of Multi-linearity issues, and may show over-fit to the model. 
+The highest correlation between Factors is between **Performance** and **Features_Versatility**, which was expected since question 8 has both loading in the PCA loadings with varimax rotation. Overall, most factors are correlated with values in between 0.37 and 0.67, except for **Distinctiveness_Prestige**, which seems not correlated at all with other Factors. If the correlation matrix showed high correlation between Factors, our following attempt to compute a Multiple Linear Regression model would easily fail, because of Multi-linearity issues, and may show over-fit to the model.
 
 
 ## Compute factor scores for your factors and name and label them appropriately
@@ -432,7 +432,7 @@ Mydata_lm <- data.frame(Scores, Mydata_with_y[, 39:40])
 WTP_Model <- lm(avg_wtp ~., Mydata_lm[,-11])
 RI_Model <- lm(avg_ri ~., Mydata_lm[,-10])
 ```
-                    
+
 
 ### Willingess To Pay Model
 
@@ -441,14 +441,14 @@ RI_Model <- lm(avg_ri ~., Mydata_lm[,-10])
 summ(WTP_Model)
 
 ```
-          
+
 The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Features_Versatility**,**Conformance**, **Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.39, which means we don't explain a lot of the variance in our dependent variable **Willingess to Pay (AVG)**. The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected.
 
 #### Residuals Analysis
 
 ```{r}
 
-par(mfrow = c(2, 2)) 
+par(mfrow = c(2, 2))
 plot(WTP_Model)
 
 ```
@@ -461,13 +461,13 @@ plot(WTP_Model)
 summ(RI_Model)
 
 ```
-The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Durability**,**Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.44, which means we don't explain a lot of the variance in our dependent variable **Repurchase Intention (AVG)** but slightly more than the other dependent variable model (**WTP**). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. 
+The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Durability**,**Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.44, which means we don't explain a lot of the variance in our dependent variable **Repurchase Intention (AVG)** but slightly more than the other dependent variable model (**WTP**). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected.
 
 #### Residuals Analysis
 
 ```{r}
 
-par(mfrow = c(2, 2)) 
+par(mfrow = c(2, 2))
 plot(RI_Model)
 
 ```
@@ -506,12 +506,12 @@ RI_Brand_Model <- lm(Mydata_with_y.avg_ri ~ ., Mydata_lm_2)
 summ(RI_Brand_Model)
 ```
 
-The results of the regression analysis for repurchase intentions do differ across brand (The brand reference in this regression is **Apple**), since our coefficients are significant and differ from 0 (except **Motorola** which is not significant). Since all brands have negative coefficient, we can conclude that Apple Customer are more willing to repurchase than other customers (across other brands). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. R^2 Squared is better than the previous different model we did until now, with value of 0.52. 
+The results of the regression analysis for repurchase intentions do differ across brand (The brand reference in this regression is **Apple**), since our coefficients are significant and differ from 0 (except **Motorola** which is not significant). Since all brands have negative coefficient, we can conclude that Apple Customer are more willing to repurchase than other customers (across other brands). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. R^2 Squared is better than the previous different model we did until now, with value of 0.52.
 
 
 ## Please compare the brands on the Factor Scores and point out the differences
 
-Down below we calculate the mean of the factor scores per brand. 
+Down below we calculate the mean of the factor scores per brand.
 
 ```{r}
 Mydata_brands <- data.frame(Scores, brands)
@@ -525,4 +525,17 @@ Brands_Scores_Factors <- Brands_Scores_Factors %>%                   # Using dpl
 DT::datatable(Brands_Scores_Factors)
 ```
 
-We see that **Apple** is the only brand that has a positive score for all of the factors. It might not always have the highest score but it is consistently good in every sector. For example **Motorola** is better in the serviceability of their phones but lacks in the aesthetics and appearance. It is also observable that the other phone brands as well as LG are way behind and get a negative score on all the factors. Also **Samsung** seems to be way of as they have negative scores on everything except for reliability where they are still behind apple. The only brand that outperforms **Apple** in some categories is **Motorola**. They beat **Apple** in Serviceability and Features and visibility. So in general it can be said that **Apple** is clearly the winner in this comparison and is way ahead of its competitors. 
+We see that **Apple** is the only brand that has a positive score for all of the factors. It might not always have the highest score but it is consistently good in every sector. For example **Motorola** is better in the serviceability of their phones but lacks in the aesthetics and appearance. It is also observable that the other phone brands as well as LG are way behind and get a negative score on all the factors. Also **Samsung** seems to be way of as they have negative scores on everything except for reliability where they are still behind apple. The only brand that outperforms **Apple** in some categories is **Motorola**. They beat **Apple** in Serviceability and Features and visibility. So in general it can be said that **Apple** is clearly the winner in this comparison and is way ahead of its competitors.
+
+
+#References
+
+[factor analysis: a short introduction, part 1](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
+
+[https://lhbikos.github.io/ReC_Psychometrics/PCA.html](https://lhbikos.github.io/ReC_Psychometrics/PCA.html)
+
+[Multivariate Multiple Linear Regression](https://www.statstest.com/multivariate-multiple-linear-regression/)
+
+[Tools for summarizing and visualizing regression models](https://cran.r-project.org/web/packages/jtools/vignettes/summ.html)
+
+[Round Numeric Columns of Data Frame with Character & Factor Variables in R (2 Examples)](https://statisticsglobe.com/round-numeric-columns-of-data-frame-in-r)
