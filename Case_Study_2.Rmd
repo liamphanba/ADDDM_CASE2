@@ -22,11 +22,11 @@ cat("\014")
 
 <break>
 
-> Goal: The goal of the research project discussed in the text is to develop a framework to measure product quality of smartphones as experienced by customers in terms of its constituent dimensions and to understand which quality dimensions significantly explain key outcome variables such as willingness to pay premium and repurchase intentions. We also will compare brand competitors in such factors and try to evaluate them with a common score scale. Thus, The goal of the project is to gain a deeper understanding of which quality dimensions significantly explain key outcome variables such as **willingness to pay premium** (**WTPP**) and **repurchase intentions** (**RI**) from customers. This information will be used by product management to improve the quality of their smartphones and enhance the company's competitive advantage in the marketplace.
+Goal: The goal of the research project discussed in the text is to develop a framework to measure product quality of smartphones as experienced by customers in terms of its constituent dimensions and to understand which quality dimensions significantly explain key outcome variables such as willingness to pay premium and repurchase intentions. We also will compare brand competitors in such factors and try to evaluate them with a common score scale. Thus, The goal of the project is to gain a deeper understanding of which quality dimensions significantly explain key outcome variables such as **willingness to pay premium** (**WTPP**) and **repurchase intentions** (**RI**) from customers. This information will be used by product management to improve the quality of their smartphones and enhance the company's competitive advantage in the marketplace.
 
-# Packages
+# Packages {-}
 
-> In the following all the packages needed for this case study are loaded.
+In the following all the packages needed for this case study are loaded.
 
 ```{r packages}
 
@@ -51,15 +51,15 @@ library(GPArotation)
 
 ```
 
-# **Data**
+# Data {-}
 
-> . The source is thereby listed below.
+The source is thereby listed below.
 
-> Source: **Advanced Data Driven Decision Making** [S401024](https://moodle.unige.ch/course/view.php?id=2675 "2675") - University of Geneva (GSEM)
->
-> Marcel Paulssen, Professor\
-> Fereshteh Vahidi, Teaching Assistant\
-> Anastasia Floru, Teaching Assistant
+Source: **Advanced Data Driven Decision Making** [S401024](https://moodle.unige.ch/course/view.php?id=2675 "2675") - University of Geneva (GSEM)
+
+Marcel Paulssen, Professor\
+Fereshteh Vahidi, Teaching Assistant\
+Anastasia Floru, Teaching Assistant
 
 ```{r data loading}
 Mydata <- read.csv("DATA/Data File_Case_Study_Factor Analysis_MD.csv", header=TRUE)
@@ -79,12 +79,18 @@ rm(Mydata)
 
 ## Data Analysis
 
+Here we look for Na's in the data. 
+
 ```{r, include=FALSE}
 list_na =colnames(Mydata_with_y)[apply(Mydata_with_y,2,anyNA)]
 list_na
 ```
 
+We see that there are none so we can continue with our Analysis without a problem. 
+
 ## Data Statistics Summary
+
+To get an overview of the data we use a describing function
 
 ```{r}
 
@@ -110,6 +116,8 @@ plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd
 ```
 ## Normality Test on Y
 
+To see if the y's are normally distributed we do a lillie.test on them. 
+
 ```{r}
 lillie.test(Mydata_with_y$wtp1) 
 lillie.test(Mydata_with_y$wtp2) 
@@ -118,9 +126,11 @@ lillie.test(Mydata_with_y$ri1)
 lillie.test(Mydata_with_y$ri2) 
 ```
 
-As we can see, none of the response variables behave normally. 
+As we can see none of the response variables behave normally. 
 
 ## Correlation Plot
+
+Next we do a correlation plot over all of the questions.  
 
 ```{r}
 
@@ -132,9 +142,13 @@ corrplot(as.matrix(cor_mat), method="color",type="upper", order="hclust", tl.col
 
 We can see that some questions have high correlations between them, but most of them being correlated positively between 0.4 and 0.6. 
 
-# **Multiple Linear Regression on All Covariates**
+# Multiple Linear Regression on All Covariates
+
+In this part we fit a multiple linear regression on the data. 
 
 ## Compute mean scores for the three willingness to pay premium items (wtp1-wtp3) and the two repurchase intention items (ri1-ri2)
+
+To do so we need to calculate the average of the wtp and the ri items. 
 
 ```{r}
 Mydata_with_y$avg_wtp <- apply(Mydata_with_y[,34:36], 1, 'mean')
@@ -487,7 +501,9 @@ summ(RI_Brand_Model)
 The results of the regression analysis for repurchase intentions do differ across brand (The brand reference in this regression is **Apple**), since our coefficients are significant and differ from 0 (except **Motorola** which is not significant). Since all brands have negative coefficient, we can conclude that Apple Customer are more willing to repurchase than other customers (across other brands). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected. R^2 Squared is better than the previous different model we did until now, with value of 0.52. 
 
 
-## Please compare the brands on the Factor Scores
+## Please compare the brands on the Factor Scores and point out the differences
+
+Down below we calculate the mean of the factor scores per brand. 
 
 ```{r}
 Mydata_brands <- data.frame(Scores, brands)
@@ -501,8 +517,4 @@ Brands_Scores_Factors <- Brands_Scores_Factors %>%                   # Using dpl
 DT::datatable(Brands_Scores_Factors)
 ```
 
-## What are points of parity and points of difference for the different brands. 
-
-
-
-
+We see that **Apple** is the only brand that has a positive score for all of the factors. It might not always have the highest score but it is consistently good in every sector. For example **Motorola** is better in the serviceability of their phones but lacks in the aesthetics and appearance. It is also observable that the other phone brands as well as LG are way behind and get a negative score on all the factors. Also **Samsung** seems to be way of as they have negative scores on everything except for reliability where they are still behind apple. The only brand that outperforms **Apple** in some categories is **Motorola**. They beat **Apple** in Serviceability and Features and visibility. So in general it can be said that **Apple** is clearly the winner in this comparison and is way ahead of its competitors. 
