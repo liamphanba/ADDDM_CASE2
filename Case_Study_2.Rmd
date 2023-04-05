@@ -114,6 +114,7 @@ We can see the normality not full-filled visually as well.
 plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd1"))
 
 ```
+
 ## Normality Test on Y
 
 To see if the y's are normally distributed we do a lillie.test on them.
