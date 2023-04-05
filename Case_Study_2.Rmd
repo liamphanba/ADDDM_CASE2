@@ -471,6 +471,7 @@ plot(WTP_Model)
 summ(RI_Model)
 
 ```
+
 The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Durability**,**Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.44, which means we don't explain a lot of the variance in our dependent variable **Repurchase Intention (AVG)** but slightly more than the other dependent variable model (**WTP**). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected.
 
 #### Residuals Analysis
