@@ -24,7 +24,7 @@ cat("\014")
 
 Goal: The goal of the research project discussed in the text is to develop a framework to measure product quality of smartphones as experienced by customers in terms of its constituent dimensions and to understand which quality dimensions significantly explain key outcome variables such as willingness to pay premium and repurchase intentions. We also will compare brand competitors in such factors and try to evaluate them with a common score scale. Thus, The goal of the project is to gain a deeper understanding of which quality dimensions significantly explain key outcome variables such as **willingness to pay premium** (**WTPP**) and **repurchase intentions** (**RI**) from customers. This information will be used by product management to improve the quality of their smartphones and enhance the company's competitive advantage in the marketplace.
 
-# Packages {-}
+# **Packages {-}**
 
 In the following all the packages needed for this case study are loaded.
 
@@ -51,7 +51,7 @@ library(GPArotation)
 
 ```
 
-# Data {-}
+# **Data {-}**
 
 The source is thereby listed below.
 
@@ -368,7 +368,7 @@ print(PC1$loadings,cutoff = 0.3,sort=TRUE)
 
 Comparing the results we see that the pca and fa deliver similar results. Every question is assigned to the same factor. The only thing that varies are the loading's themselves.
 
-We rerun the communalities for the principal compoent analysis. 
+We rerun the communalities for the principal component analysis. 
 
 ```{r}
 PC_communalities_9=data.frame(sort(PC1$communality))
@@ -471,6 +471,7 @@ plot(WTP_Model)
 summ(RI_Model)
 
 ```
+
 The following Factors are significant: **Serviceability**, **Performance**, **Ease_of_Use**,**Durability**,**Distinctiveness_Prestige** at 1% level (99% Confidence Interval). R^2 Adjusted is equal to 0.44, which means we don't explain a lot of the variance in our dependent variable **Repurchase Intention (AVG)** but slightly more than the other dependent variable model (**WTP**). The F-Test is significant, H0 which says that no connection between the DVs and the IVs can be thus rejected.
 
 #### Residuals Analysis
@@ -506,12 +507,20 @@ The following Factors are given in descending order of their predictive power (c
 5. **Serviceability**
 
 
+
+--------------------------------------------------------------------------------------------------------------
+
+
 <center>
 
-![](Factors Nodes.png)
+**Resume Of 2 Regression Analysis with only Significant Factors on WTP and RI**
 
+<img src="Factors Nodes.png" alt= "Resume Of Regression Analysis with Only Significant Variables" width="50%" height="50%">
 
 </center>
+
+
+--------------------------------------------------------------------------------------------------------------
 
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
