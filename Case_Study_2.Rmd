@@ -114,6 +114,7 @@ We can see the normality not full-filled visually as well.
 plotNormalHistogram(Mydata_with_y$qd1,main = paste("Frequency Distribution of qd1"))
 
 ```
+
 ## Normality Test on Y
 
 To see if the y's are normally distributed we do a lillie.test on them.
@@ -504,6 +505,14 @@ The following Factors are given in descending order of their predictive power (c
 4. **Durability**
 5. **Serviceability**
 
+
+<center>
+
+![](Factors Nodes.png)
+
+
+</center>
+
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
 ```{r}
@@ -537,7 +546,7 @@ DT::datatable(Brands_Scores_Factors)
 We see that **Apple** is the only brand that has a positive score for all of the factors. It might not always have the highest score but it is consistently good in every sector. For example **Motorola** is better in the serviceability of their phones but lacks in the aesthetics and appearance. It is also observable that the other phone brands as well as LG are way behind and get a negative score on all the factors. Also **Samsung** seems to be way of as they have negative scores on everything except for reliability where they are still behind apple. The only brand that outperforms **Apple** in some categories is **Motorola**. They beat **Apple** in Serviceability and Features and visibility. So in general it can be said that **Apple** is clearly the winner in this comparison and is way ahead of its competitors.
 
 
-#References
+# References
 
 [factor analysis: a short introduction, part 1](https://www.theanalysisfactor.com/factor-analysis-1-introduction/#:~:text=The%20eigenvalue%20is%20a%20measure,than%20a%20single%20observed%20variable.)
 
