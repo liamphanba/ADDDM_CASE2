@@ -220,14 +220,6 @@ sort(KMOTEST$MSA)
 
 All values are above 0.6 so a good factor analysis can be done. Only one value is close to not being good enough which is qd4. All the others are over 0.9.
 
-### Bartlett's test
-
-```{r}
-bart_spher(Mydata_qd)
-```
-
-There is a correlation between variables, and the assumptions are not met since we have above 5 variables 
-
 ### Kaiser-Meyer-Olkin
 
 ```{r}
@@ -236,6 +228,15 @@ KMOTEST$KMO
 ```
 
 The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9). 
+
+### Bartlett's test
+
+```{r}
+bart_spher(Mydata_qd)
+```
+
+There is a correlation between variables, and the assumptions are not met since we have above 5 variables 
+
 
 ## Principal axes factoring with varimax
 
