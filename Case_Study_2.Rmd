@@ -520,6 +520,14 @@ The following Factors are given in descending order of their predictive power (c
 4. **Durability**
 5. **Serviceability**
 
+
+<center>
+
+![](Factors Nodes.png)
+
+
+</center>
+
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
 ```{r}
