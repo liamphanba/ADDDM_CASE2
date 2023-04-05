@@ -522,12 +522,22 @@ The following Factors are given in descending order of their predictive power (c
 5. **Serviceability**
 
 
+
+--------------------------------------------------------------------------------------------------------------
+
+<b>
+
 <center>
 
-![](Factors Nodes.png)
+**Resume Of 2 Regression Analysis with only Significant Factors on WTP and RI**
 
+<img src="Factors Nodes.png" alt= "Resume Of Regression Analysis with Only Significant Variables" width="50%" height="50%">
 
 </center>
+
+<b>
+
+--------------------------------------------------------------------------------------------------------------
 
 ## Do the results of the regression analysis for repurchase intentions differ across brands e.g. Samsung versus Apple versus LG
 
