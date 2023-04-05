@@ -24,7 +24,7 @@ cat("\014")
 
 Goal: The goal of the research project discussed in the text is to develop a framework to measure product quality of smartphones as experienced by customers in terms of its constituent dimensions and to understand which quality dimensions significantly explain key outcome variables such as willingness to pay premium and repurchase intentions. We also will compare brand competitors in such factors and try to evaluate them with a common score scale. Thus, The goal of the project is to gain a deeper understanding of which quality dimensions significantly explain key outcome variables such as **willingness to pay premium** (**WTPP**) and **repurchase intentions** (**RI**) from customers. This information will be used by product management to improve the quality of their smartphones and enhance the company's competitive advantage in the marketplace.
 
-# **Packages {-}**
+# **Packages** {-}
 
 In the following all the packages needed for this case study are loaded.
 
@@ -51,7 +51,7 @@ library(GPArotation)
 
 ```
 
-# **Data {-}**
+# **Data** {-}
 
 The source is thereby listed below.
 
