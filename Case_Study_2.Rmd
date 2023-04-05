@@ -235,7 +235,7 @@ The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvel
 bart_spher(Mydata_qd)
 ```
 
-There is a correlation between variables, and the assumptions are not met since we have above 5 variables 
+There is a correlation between variables, and the assumptions are not met since we have above 5 variables (this test shouldn't be used normally).
 
 
 ## Principal axes factoring with varimax
