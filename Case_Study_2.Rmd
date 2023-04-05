@@ -218,7 +218,7 @@ KMOTEST=KMOS(Mydata_qd)
 sort(KMOTEST$MSA)
 ```
 
-All values are above 0.6 so a good factor analysis can be done. Only one value is close to not being good enough which is qd4. All the others are over 0.9.
+All values are above 0.6 so a good factor analysis can be done. Only one value is close to not being good enough which is qd4 = 0.64. All the others are over 0.9.
 
 ### Kaiser-Meyer-Olkin
 
@@ -227,7 +227,7 @@ KMOTEST=KMOS(Mydata_qd)
 KMOTEST$KMO
 ```
 
-The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9). 
+The Kaiser-Meyer-Olkin criterion suggest that the adequacy of the data is marvelous (>0.9), which means we can use Factor Analysis. 
 
 ### Bartlett's test
 
