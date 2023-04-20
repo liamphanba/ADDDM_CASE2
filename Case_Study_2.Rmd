@@ -36,7 +36,7 @@ library(jtools)
 library(kableExtra)
 library(pastecs)
 library(rcompanion)   #Histogram and Normal Curve
-library(nortest) #Kolmogorov-Smirnov-Test
+Klibrary(nortest) #Kolmogorov-Smirnov-Test
 library(corrplot) #correlation matrix plot
 library(olsrr)  #VIF and Tolerance Values
 library(dplyr)
